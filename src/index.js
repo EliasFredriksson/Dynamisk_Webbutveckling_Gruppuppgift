@@ -3,6 +3,7 @@ require("./mongoose.js");
 
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
+const sass = require("node-sass");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
@@ -27,6 +28,8 @@ app.use(express.urlencoded({ extended: true })); //  So we can use froms.
 app.use(express.json()); // Tell express to enable json as a valid format for req.body.
 app.use(express.static("./src/public")); // Public folder. Css and  JS access.
 new customMorgan(morgan, app).enable(); // Custom morgan
+
+app.use("/assets", express.static(path.join(__dirname, "./public")));
 
 // ======= ROUTES =======
 // Home
