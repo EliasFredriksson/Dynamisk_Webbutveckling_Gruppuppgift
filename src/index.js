@@ -11,17 +11,18 @@ const path = require("path");
 const customMorgan = require("./public/js/models/Custom_Morgan_Token");
 
 const recipesRouter = require("./routers/router-recipes");
+const usersRouter = require("./routers/router-users");
 
 const app = express();
 
 // ======= CONFIG =======
 app.engine(
-    // Configure engine.
-    "hbs",
-    expressHandlebars.engine({
-        extname: ".hbs",
-        defaultLayout: "main",
-    })
+  // Configure engine.
+  "hbs",
+  expressHandlebars.engine({
+    extname: ".hbs",
+    defaultLayout: "main",
+  })
 );
 app.set("view engine", "hbs"); // Tell which engine to set / use.
 app.set("views", path.join(__dirname, "views")); // Tell where the views folder is located.
@@ -33,17 +34,18 @@ app.use("/assets", express.static(path.join(__dirname, "./public")));
 
 // ======= ROUTERS =======
 app.use("/recipes", recipesRouter);
+app.use("/users", usersRouter);
 
 new customMorgan(morgan, app).enable(); // Custom morgan
 // ======= ROUTES =======
 // Home
 app.get("/", (req, res) => {
-    res.render("home", {
-        title: "Home",
-    });
+  res.render("home", {
+    title: "Home",
+  });
 });
 
 // ======= LISTEN =======
 app.listen(8000, () => {
-    console.log("http://localhost:8000/");
+  console.log("http://localhost:8000/");
 });
