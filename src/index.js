@@ -15,6 +15,7 @@ const recipesRouter = require("./routers/router-recipes");
 const app = express();
 
 // ======= CONFIG =======
+new customMorgan(morgan, app).enable(); // Custom morgan
 app.engine(
     // Configure engine.
     "hbs",
@@ -33,8 +34,6 @@ app.use("/assets", express.static(path.join(__dirname, "./public")));
 
 // ======= ROUTERS =======
 app.use("/recipes", recipesRouter);
-
-new customMorgan(morgan, app).enable(); // Custom morgan
 // ======= ROUTES =======
 // Home
 app.get("/", (req, res) => {
