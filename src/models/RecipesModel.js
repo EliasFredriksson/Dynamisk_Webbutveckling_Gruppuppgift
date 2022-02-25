@@ -9,11 +9,7 @@ const RecipesSchema = new mongoose.Schema({
             ingredient: { type: String, required: true },
             ammount: { type: Number, required: true },
             unit: { type: String, required: true },
-            categories: [
-                {
-                    category: { type: String, required: true },
-                },
-            ],
+            category: { type: String, required: true },
             image: { type: String },
         },
     ],
