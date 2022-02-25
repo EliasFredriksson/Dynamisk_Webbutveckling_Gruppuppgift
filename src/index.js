@@ -10,6 +10,8 @@ const morgan = require("morgan");
 const path = require("path");
 const customMorgan = require("./public/js/models/Custom_Morgan_Token");
 
+const recipesRouter = require("./routers/router-recipes");
+
 const app = express();
 
 // ======= CONFIG =======
@@ -27,10 +29,12 @@ app.use(cookieParser()); // Used to more easily read cookies.
 app.use(express.urlencoded({ extended: true })); //  So we can use froms.
 app.use(express.json()); // Tell express to enable json as a valid format for req.body.
 app.use(express.static("./src/public")); // Public folder. Css and  JS access.
-new customMorgan(morgan, app).enable(); // Custom morgan
-
 app.use("/assets", express.static(path.join(__dirname, "./public")));
 
+// ======= ROUTERS =======
+app.use("/recipes", recipesRouter);
+
+new customMorgan(morgan, app).enable(); // Custom morgan
 // ======= ROUTES =======
 // Home
 app.get("/", (req, res) => {
