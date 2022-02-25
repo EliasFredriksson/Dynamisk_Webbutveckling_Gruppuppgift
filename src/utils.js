@@ -1,6 +1,6 @@
 const RecipesModel = require("./models/RecipesModel");
 
-const checkForRecipePrototype = (req, res, next) => {
+const checkForRecipePrototype = async (req, res, next) => {
     if (res.locals.recipePrototype === undefined) {
         res.locals.recipePrototype = {
             name: "",
