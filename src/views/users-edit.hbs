@@ -1,8 +1,6 @@
-<h2>Get started</h2>
+<h2>Edit your user info</h2>
 
-<h3>Create a Account</h3>
-
-<form action="/users/create" method="POST">
+<form action="/users/edit/{{_id}}" method="POST">
   <input type="text" name="username" placeholder="Username" />
   <br />
   <input type="password" name="password" placeholder="Password" />
