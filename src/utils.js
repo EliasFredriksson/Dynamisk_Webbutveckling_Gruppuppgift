@@ -1,20 +1,13 @@
 const mongoose = require("mongoose");
+const settings = require("./settings");
 
-const INGREDIENT_UNITS = ["st", "ml", "cl", "dl", "l", "mg", "g", "hg", "kg"];
-const INGREDIENT_CATEGORIES = [
-    "kött",
-    "fisk",
-    "frukt",
-    "bär",
-    "mjölk",
-    "laktos",
-];
-
+// Validates information which is to be passed into a new recipe schema.
 const validateRecipe = (name, chefId, description, image, ingredients) => {
     if (typeof name !== "string" || name.length <= 0) throw "Invalid Name";
-    // TEMPORARY
+    // ############## TEMPORARY ##############
+    // Until we have valid users to use.
     chefId = new mongoose.Types.ObjectId();
-    // ===
+    // #######################################
     if (!mongoose.Types.ObjectId.isValid(chefId)) throw "Invalid ID";
     if (typeof description !== "string" || description.length <= 0)
         throw "Invalid description";
@@ -40,7 +33,7 @@ const validateRecipe = (name, chefId, description, image, ingredients) => {
         // === Unit ===
         if (
             typeof entry.unit !== "string" ||
-            !INGREDIENT_UNITS.includes(entry.unit.toLowerCase())
+            !settings.INGREDIENT_UNITS.includes(entry.unit.toLowerCase())
         )
             throw "Invalid ingredient unit";
         // === Categories ===
@@ -49,7 +42,7 @@ const validateRecipe = (name, chefId, description, image, ingredients) => {
         entry.categories.forEach((category) => {
             if (
                 typeof category !== "string" ||
-                !INGREDIENT_CATEGORIES.includes(category.toLowerCase())
+                !settings.INGREDIENT_CATEGORIES.includes(category.toLowerCase())
             )
                 throw "Invalid category";
         });
@@ -57,6 +50,5 @@ const validateRecipe = (name, chefId, description, image, ingredients) => {
 };
 
 module.exports = {
-    INGREDIENT_UNITS,
     validateRecipe,
 };
