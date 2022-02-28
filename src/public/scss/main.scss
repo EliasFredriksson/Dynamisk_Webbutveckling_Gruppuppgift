@@ -1,12 +1,13 @@
 @use "CreateRecipe";
+@use "header";
 html,
 body {
-    margin: 0;
-    padding: 0;
-    font-family: "Arvo", serif;
-    font-size: 12pt;
-    height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Arvo", serif;
+  font-size: 12pt;
+  height: 100%;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

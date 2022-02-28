@@ -1,18 +1,23 @@
 <header>
     <div class="history-back"><i class="fas fa-arrow-left"></i></div>
     <h1>Recept Haket</h1>
-    <div class="login-wrapper">
+    <div class="login-container">
         <form action="/user/login" method="post">
-            <div class="single-input-container">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" placeholder="Username">
+            <div class="input-containers">
+                <div class="single-input-container">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" placeholder="Username">
+                </div>
+                <div class="single-input-container">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" placeholder="Password">
+                </div>
             </div>
-            <div class="single-input-container">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Password">
+            <div class="submit-button-link-container">
+                <a href="/user/register">Register new User</a>
+                <input class="submit-button" type="submit" value="Login">
             </div>
-            <input type="submit" value="Login">
         </form>
-        <a href="/user/register">Register new User</a>
+
     </div>
 </header>
