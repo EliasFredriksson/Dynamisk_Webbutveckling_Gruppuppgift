@@ -3,7 +3,6 @@ require("./mongoose.js");
 
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
-const sass = require("node-sass");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
