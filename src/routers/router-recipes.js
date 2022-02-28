@@ -21,25 +21,30 @@ recipesRouter.get("/create", (req, res) => {
 });
 // Create new recipe and save to database.
 recipesRouter.post("/create", async (req, res) => {
-    const { name, chefId, description, image, ingredients } = req.body;
+    const { name, description, image, ingredients } = req.body;
+    // const parsedIngredients = JSON.parse(ingredients);
+
+    // TEMPORARY
+    const chefId = new mongoose.Types.ObjectId();
+    // #############################
     try {
         validateRecipe(name, chefId, description, image, ingredients);
         const newRecipe = new RecipesModel({
             name: name,
             chef: mongoose.Types.ObjectId(chefId),
             description: description,
-            image: image,
+            image: "IMAGE_PLACEHOLDER",
             ingredients: ingredients,
         });
         await newRecipe.save();
-        res.status(201).redirect(`/recipes/${newRecipe._id}`);
+        res.status(201).send(newRecipe._id);
     } catch (error) {
         console.log(
             "\n\n================= ERROR =================\n",
             error,
             "\n\n"
         );
-        res.status(400).redirect("/recipes/create");
+        res.status(400).send(error);
     }
 });
 // ######################## READ ########################

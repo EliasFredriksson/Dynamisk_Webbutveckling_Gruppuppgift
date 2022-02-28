@@ -18,7 +18,7 @@ const validateRecipe = (name, chefId, description, image, ingredients) => {
         if (!("ingredient" in entry)) throw "Missing ingredient name";
         if (!("amount" in entry)) throw "Missing ingredient amount";
         if (!("unit" in entry)) throw "Missing ingredient unit";
-        if (!("categories" in entry)) throw "Missing ingredient categories";
+        if (!("category" in entry)) throw "Missing ingredient category";
 
         // Check if properties are of expected type and contains expected value(s);
         // === Ingredient (name) ===
@@ -37,15 +37,14 @@ const validateRecipe = (name, chefId, description, image, ingredients) => {
         )
             throw "Invalid ingredient unit";
         // === Categories ===
-        if (!Array.isArray(entry.categories))
-            throw "Invalid ingredient categories";
-        entry.categories.forEach((category) => {
-            if (
-                typeof category !== "string" ||
-                !settings.INGREDIENT_CATEGORIES.includes(category.toLowerCase())
+
+        if (
+            typeof entry.category !== "string" ||
+            !settings.INGREDIENT_CATEGORIES.includes(
+                entry.category.toLowerCase()
             )
-                throw "Invalid category";
-        });
+        )
+            throw "Invalid category";
     });
 };
 
