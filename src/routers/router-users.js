@@ -42,7 +42,7 @@ usersRouter.get("/edit", async (req, res) => {
 usersRouter.post("/edit", async (req, res) => {
   console.log("console log  post edit");
   const { username, hashedPassword, email, recipes, image } = req.body;
-  //Temporary for testing
+  //Temporary user id for testing ##################
   const userId = "621cf8afb2fc1a28d502a8cd";
   //############
   await UsersModels.findByIdAndUpdate(userId, {
@@ -58,7 +58,9 @@ usersRouter.post("/edit", async (req, res) => {
 
 // Delete recipe
 usersRouter.post("/delete", async (req, res) => {
+  //#####Temporary user id for testing###############
   const userId = "621cf8c7b2fc1a28d502a8d1";
+  //##############################
   UsersModels.findByIdAndDelete(
     { _id: new mongoose.Types.ObjectId(userId) },
     (error, docs) => {
