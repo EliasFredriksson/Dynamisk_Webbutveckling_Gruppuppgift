@@ -1,0 +1,63 @@
+<div id="create-recipe-body">
+    {{>header-home}}
+    <main>
+        <div id="wrapper">
+            <span id="title">Create New Recipe</span>
+            <form action="/recipes/create" method="post" id="new-recipe-form">
+                <div id="input-fields">
+                    <div id="form-left">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Recipe Name"
+                            required
+                        />
+                        <textarea
+                            name="description"
+                            id=""
+                            placeholder="Description"
+                            required
+                        ></textarea>
+                    </div>
+                    <div id="form-right">
+                        <span>Add Ingredient</span>
+                        <div id="add-ingredient-wrapper">
+                            <input
+                                id="ingredient"
+                                type="text"
+                                name="ingredient"
+                                placeholder="ingredient"
+                                required
+                            />
+                            <input
+                                id="amount"
+                                type="number"
+                                step="0.1"
+                                name="amount"
+                                placeholder="1"
+                                min="0"
+                                required
+                            />
+                            <select name="unit" id="unit" required>
+                                {{#each ingredientUnits}}
+                                <option value="{{ this }}">{{ this }}</option>
+                                {{/each}}
+                            </select>
+                            <select name="category" id="category" required>
+                                {{#each ingredientCategories}}
+                                <option value="{{ this }}">{{ this }}</option>
+                                {{/each}}
+                            </select>
+                            <button type="button" id="add-ingredient">
+                                Add
+                            </button>
+                        </div>
+                        <div id="current-ingredients"></div>
+                    </div>
+                </div>
+                <input type="submit" id="submit-recipe" value="Done" />
+            </form>
+        </div>
+    </main>
+    {{>footer-home }}
+</div>
