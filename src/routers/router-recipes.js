@@ -1,5 +1,7 @@
 const express = require("express");
 
+const settings = require("../settings");
+
 const { validateRecipe } = require("../utils");
 const RecipesModel = require("../models/RecipesModel.js");
 const { default: mongoose } = require("mongoose");
@@ -10,10 +12,12 @@ const recipesRouter = express.Router();
 // ####################### CREATE #######################
 // Go to create recipe page.
 recipesRouter.get("/create", (req, res) => {
-    res.status(200).send("Sent back to create page.");
-    // res.render("recipes-create", {
-    //     title: "Create Recipe",
-    // });
+    // res.status(200).send("Sent back to create page.");
+    res.render("recipes-create", {
+        title: "Create Recipe",
+        ingredientUnits: settings.INGREDIENT_UNITS,
+        ingredientCategories: settings.INGREDIENT_CATEGORIES,
+    });
 });
 // Create new recipe and save to database.
 recipesRouter.post("/create", async (req, res) => {

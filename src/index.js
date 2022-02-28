@@ -15,7 +15,6 @@ const recipesRouter = require("./routers/router-recipes");
 const app = express();
 
 // ======= CONFIG =======
-new customMorgan(morgan, app).enable(); // Custom morgan
 app.engine(
     // Configure engine.
     "hbs",
@@ -24,12 +23,13 @@ app.engine(
         defaultLayout: "main",
     })
 );
+app.use(express.static("./src/public")); // Public folder. Css and  JS access.
+new customMorgan(morgan, app).enable(); // Custom morgan
 app.set("view engine", "hbs"); // Tell which engine to set / use.
 app.set("views", path.join(__dirname, "views")); // Tell where the views folder is located.
 app.use(cookieParser()); // Used to more easily read cookies.
 app.use(express.urlencoded({ extended: true })); //  So we can use froms.
 app.use(express.json()); // Tell express to enable json as a valid format for req.body.
-app.use(express.static("./src/public")); // Public folder. Css and  JS access.
 app.use("/assets", express.static(path.join(__dirname, "./public")));
 
 // ======= ROUTERS =======

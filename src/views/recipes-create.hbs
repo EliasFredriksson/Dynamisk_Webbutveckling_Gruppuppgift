@@ -1,0 +1,41 @@
+<div id="recipe-body">
+    {{>header-home}}
+    <main id="recipe-create-main">
+        <h1 id="title">Create New Recipe</h1>
+        <form action="/recipes/create" method="post" id="new-recipe-form">
+            <div id="form-left">
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Recipe Name"
+                    required
+                />
+                <textarea
+                    name="description"
+                    id=""
+                    placeholder="Description"
+                    required
+                ></textarea>
+            </div>
+            <div id="form-right">
+                <div id="add-ingredient-wrapper">
+                    <input
+                        type="text"
+                        name="ingredient"
+                        placeholder="ingredient"
+                    />
+                    <input type="number" name="amount" placeholder="amount" />
+                    <select name="unit">
+                        {{#each ingredientCategories}}
+                        <option value="{{ this }}">{{ this }}</option>
+                        {{/each}}
+                    </select>
+                    <input type="button" id="add-ingredient" value="Add" />
+                </div>
+                <div id="current-ingredients"></div>
+            </div>
+            <input type="submit" id="submit-recipe" value="Done" />
+        </form>
+    </main>
+    {{>footer-home }}
+</div>
