@@ -4,10 +4,10 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   hashedPassword: { type: String, required: true },
   email: { type: String, required: true },
-  recipe: { type: [], required: true },
+  recipes: { type: Array, required: true },
   image: { type: String },
 });
 
-const UsersModel = mongoose.model("Users", userSchema);
+const UsersModels = mongoose.model("users", userSchema);
 
-module.exports = UsersModel;
+module.exports = UsersModels;

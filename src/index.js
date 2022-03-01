@@ -8,8 +8,10 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const path = require("path");
 const customMorgan = require("./public/js/models/Custom_Morgan_Token");
+const UsersModel = require("./models/UsersModels.js");
 
 const recipesRouter = require("./routers/router-recipes");
+const usersRouter = require("./routers/router-users");
 
 const app = express();
 
@@ -33,6 +35,9 @@ app.use("/assets", express.static(path.join(__dirname, "./public")));
 
 // ======= ROUTERS =======
 app.use("/recipes", recipesRouter);
+app.use("/users", usersRouter);
+
+new customMorgan(morgan, app).enable(); // Custom morgan
 // ======= ROUTES =======
 
 // Auth Middleware
