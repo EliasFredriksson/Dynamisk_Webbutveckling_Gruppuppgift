@@ -1,0 +1,55 @@
+body {
+  background-image: url("/assets/create-u.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.user-create-big-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.user-create-big-container-two {
+  border: 1px solid black;
+  width: 800px;
+  height: 500px;
+  border-radius: 10px;
+  background-color: rgba(165, 165, 165, 0.849);
+}
+
+.user-create-heading-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+// form {
+//   display: flex;
+//   flex-direction: row;
+// }
+
+// .user-create-heading-container {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   flex-direction: column;
+// }
+// .user-create-inputfield-large-container {
+//   display: flex;
+//   flex-direction: column;
+//   margin: 10px;
+// }
+
+// .user-create-inputfield-container-one {
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .user-create-inputfield-container-two {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// }

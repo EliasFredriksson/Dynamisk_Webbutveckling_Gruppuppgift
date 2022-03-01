@@ -1,23 +1,29 @@
+    {{>header-home}}
+
+<div class="user-create-big-container">
+  <div class="user-create-big-container-two">
+<div class="user-create-heading-container">
 <h2>Get started</h2>
-
 <h3>Create a Account</h3>
+</div>
 
+<div class="user-create-inputfield-large-container">
+<div class="user-create-inputfield-container-one">
 <form action="/users/create" method="POST">
   <input type="text" name="username" placeholder="Username" />
-  <br />
   <input type="password" name="password" placeholder="Password" />
-  <br />
+ 
   <input
     type="password"
     name="confirmpassword"
-    placeholder="Confirm password"
-  />
-  <br />
-
+    placeholder="Confirm password"/>
+  </div>
+ 
+<div class="user-create-inputfield-container-two">
   <input type="text" name="email" placeholder="Email" />
-  <br />
   <input type="text" name="confirmemail" placeholder="Confirm email" />
-  <br />
   <input type="submit" value="Register" />
-
+</div>
 </form>
+</div>
+</div>
