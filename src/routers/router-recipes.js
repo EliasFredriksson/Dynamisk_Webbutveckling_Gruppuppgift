@@ -4,6 +4,7 @@ const settings = require("../settings");
 
 const { validateRecipe } = require("../utils");
 const RecipesModel = require("../models/RecipesModel.js");
+const UsersModel = require("../models/UsersModels.js");
 const { default: mongoose } = require("mongoose");
 
 const recipesRouter = express.Router();
@@ -49,22 +50,22 @@ recipesRouter.post("/create", async (req, res) => {
 });
 // ######################## READ ########################
 // Get recipe by provided ID. Send found recipe to/and render recipe single page.
-recipesRouter.get("/:id", (req, res) => {
+recipesRouter.get("/:id", async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) throw "Invalid Id";
-        RecipesModel.findById(req.params.id, (error, recipe) => {
-            if (error) throw error;
-            if (recipe) {
-                res.status(200).send(recipe);
-                // ########## TEMPORARILY DISABLED ##########
-                // Enable once the handlebars html is in place.
-                // res.render("recipes-single", {
-                //     title: "Recipe",
-                //     recipe: recipe,
-                // });
-            } else {
-                res.status(400).redirect("/");
-            }
+        const recipe = await RecipesModel.findById(req.params.id).lean();
+        const chef = await UsersModel.findById(recipe.chef);
+
+        let recipeCategories = [];
+        recipe.ingredients.forEach((entry) => {
+            if (!recipeCategories.includes(entry.category))
+                recipeCategories.push(entry.category);
+        });
+        res.render("recipes-single", {
+            title: "Recipe",
+            recipe: recipe,
+            chef: chef,
+            categories: recipeCategories,
         });
     } catch (error) {
         console.log("\n\nERROR:", error);

@@ -1,0 +1,52 @@
+<div id="single-recipe-body">
+    {{>header-home}}
+    <main>
+        <div id="wrapper">
+            <div id="recipe-header">
+                <span id="title">{{ recipe.name }}</span>
+                <span id="rating">[rating placeholder]</span>
+            </div>
+            <div id="recipe-body">
+                <div id="left">
+                    <span>Ingredienser</span>
+                    <ul>
+                        {{#each recipe.ingredients}}
+                        <li>
+                            <span>{{ ingredient }}</span>
+                            <span>{{ amount }}{{ unit }}</span>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div id="middle">
+                    <div id="middle-left">
+                        <span>Instruktioner</span>
+                        <textarea disabled>{{ recipe.description }}</textarea>
+                    </div>
+                    <div id="middle-seperator"></div>
+                    <div id="middle-right">
+                        <span>Kategorier</span>
+                        <ul>
+                            {{#each categories}}
+                            <li>{{ this }}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+                <div id="right">
+                    <a href="{{#if chef}}/users/{{ chef._id }}{{else}}/{{/if}}">
+                        <div id="chef-img-wrapper">
+                            <img
+                                src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png"
+                            />
+                        </div>
+                    </a>
+                    <span id="chef-name"
+                        >{{#if chef}}{{ chef.username }}{{else}} Missing User{{/if}}</span
+                    >
+                </div>
+            </div>
+        </div>
+    </main>
+    {{>footer-home }}
+</div>

@@ -1,0 +1,138 @@
+#single-recipe-body {
+    flex-grow: 1;
+
+    background-image: url("https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+    background-position: center;
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+
+    main {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        #wrapper {
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 5px;
+            box-shadow: 0px 0px 20px rgb(117, 117, 117);
+            height: 80%;
+            width: 60%;
+            background-color: rgba($color: #ffffff, $alpha: 0.8);
+            padding-bottom: 3em;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            #recipe-header {
+                width: 90%;
+                padding: 20px;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                #title {
+                    font-size: 2em;
+                }
+                #rating {
+                    font-size: 1em;
+                }
+            }
+            #recipe-body {
+                flex-grow: 1;
+                width: 90%;
+
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+
+                span {
+                    font-size: 0.9em;
+                }
+
+                #left,
+                #middle,
+                #right {
+                    padding: 5px;
+                    border: 1px solid black;
+                    background-color: white;
+                    box-sizing: border-box;
+                }
+
+                #left {
+                    padding: 10px;
+                    ul {
+                        margin-top: 10px;
+                        padding-left: 10px;
+                    }
+                    ul > li {
+                        padding: 2px;
+                        font-size: 0.7em;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
+                #middle {
+                    flex-grow: 1;
+                    padding: 10px;
+
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+
+                    #middle-left {
+                        flex-grow: 1;
+                        display: flex;
+                        flex-direction: column;
+
+                        textarea {
+                            padding: 5px;
+                            flex-grow: 1;
+                            resize: none;
+                            border: none;
+                        }
+                    }
+                    #middle-seperator {
+                        background-color: rgb(88, 78, 69);
+                        width: 1px;
+                    }
+                    #middle-right {
+                        width: 30%;
+                        display: flex;
+                        flex-direction: column;
+
+                        ul {
+                            list-style: circle;
+                            margin-top: 5px;
+                            padding-left: 20px;
+                        }
+                        ul > li {
+                            font-size: 0.7em;
+                        }
+                    }
+                }
+                #right {
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    #chef-img-wrapper {
+                        width: 80px;
+                        img {
+                            width: 100%;
+                        }
+                    }
+                    #chef-name {
+                        font-size: 0.7em;
+                    }
+                }
+            }
+        }
+    }
+}
