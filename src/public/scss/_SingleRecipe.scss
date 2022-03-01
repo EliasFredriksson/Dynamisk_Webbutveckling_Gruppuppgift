@@ -67,14 +67,15 @@
                 #left {
                     padding: 10px;
                     ul {
+                        list-style: circle;
                         margin-top: 10px;
-                        padding-left: 10px;
+                        padding-left: 20px;
                     }
                     ul > li {
                         padding: 2px;
                         font-size: 0.7em;
-                        display: flex;
-                        justify-content: space-between;
+                        word-spacing: 10px;
+                        color: rgb(88, 82, 76);
                     }
                 }
                 #middle {
@@ -91,6 +92,8 @@
                         flex-direction: column;
 
                         textarea {
+                            font-family: "Arvo", serif;
+                            font-size: 0.7em;
                             padding: 5px;
                             flex-grow: 1;
                             resize: none;
@@ -112,7 +115,9 @@
                             padding-left: 20px;
                         }
                         ul > li {
+                            padding: 2px;
                             font-size: 0.7em;
+                            color: rgb(88, 82, 76);
                         }
                     }
                 }
@@ -123,6 +128,8 @@
                     align-items: center;
 
                     #chef-img-wrapper {
+                        padding-left: 20px;
+                        padding-right: 20px;
                         width: 80px;
                         img {
                             width: 100%;

@@ -54,7 +54,7 @@ recipesRouter.get("/:id", async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) throw "Invalid Id";
         const recipe = await RecipesModel.findById(req.params.id).lean();
-        const chef = await UsersModel.findById(recipe.chef);
+        const chef = await UsersModel.findById(recipe.chef).lean();
 
         let recipeCategories = [];
         recipe.ingredients.forEach((entry) => {
@@ -62,7 +62,7 @@ recipesRouter.get("/:id", async (req, res) => {
                 recipeCategories.push(entry.category);
         });
         res.render("recipes-single", {
-            title: "Recipe",
+            title: recipe.name,
             recipe: recipe,
             chef: chef,
             categories: recipeCategories,
@@ -77,11 +77,11 @@ recipesRouter.get("/:id", async (req, res) => {
 recipesRouter.get("/:id/edit", (req, res) => {
     RecipesModel.findById(req.params.id, (error, recipe) => {
         if (error) res.status(500).redirect(`/`);
-        if (recipe)
-            res.status(200).redirect("recipe-edit", {
-                title: "Edit Recipe",
-                recipe: recipe,
-            });
+        if (recipe) res.status(200).redirect("/");
+        // res.status(200).render("recipe-edit", {
+        //     title: "Edit Recipe",
+        //     recipe: recipe,
+        // });
         else res.status(400).redirect(`/`);
     });
 });

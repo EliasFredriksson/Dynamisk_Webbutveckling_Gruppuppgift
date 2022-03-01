@@ -46,6 +46,11 @@
                     >
                 </div>
             </div>
+            {{!-- {{#if loggedIn}} --}}
+            <div id="recipe-footer">
+                <a href="/recipes/{{ recipe._id }}/edit">Redigera</a>
+            </div>
+            {{!-- {{/if}} --}}
         </div>
     </main>
     {{>footer-home }}
