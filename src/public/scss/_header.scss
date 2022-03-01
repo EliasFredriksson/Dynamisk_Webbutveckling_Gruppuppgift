@@ -15,6 +15,7 @@ header {
     background-color: #c4c4c4;
     cursor: pointer;
     transition: all 0.3s ease;
+
     &:hover {
       background-color: #555555;
       color: white;
@@ -23,8 +24,8 @@ header {
       font-size: 1.3rem;
     }
   }
-  h1 {
-    margin-left: 30px;
+  .logo {
+    margin-left: 100px;
   }
   .login-container {
     padding: 20px;
