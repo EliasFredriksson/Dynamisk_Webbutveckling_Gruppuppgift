@@ -48,7 +48,18 @@
             </div>
             {{!-- {{#if loggedIn}} --}}
             <div id="recipe-footer">
-                <a href="/recipes/{{ recipe._id }}/edit">Redigera</a>
+                <form action="#" method="post">
+                    <input
+                        type="submit"
+                        value="Redigera"
+                        formaction="/recipes/{{ recipe._id }}/edit"
+                    />
+                    <input
+                        type="submit"
+                        value="Ta bort"
+                        formaction="/recipes/{{ recipe._id }}/delete"
+                    />
+                </form>
             </div>
             {{!-- {{/if}} --}}
         </div>

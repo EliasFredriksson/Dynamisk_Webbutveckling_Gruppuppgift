@@ -140,6 +140,28 @@
                     }
                 }
             }
+            #recipe-footer {
+                margin-top: 10px;
+                form {
+                    display: flex;
+                    gap: 30px;
+
+                    input {
+                        border: none;
+                        padding: 10px;
+                        border-radius: 2px;
+                        background-color: rgb(238, 224, 214);
+                        cursor: pointer;
+                        transition: 0.2s ease;
+                    }
+
+                    input:hover {
+                        transform: scale(1.1);
+                        color: white;
+                        background-color: rgb(72, 66, 62);
+                    }
+                }
+            }
         }
     }
 }
