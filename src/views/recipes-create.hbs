@@ -15,12 +15,14 @@
                             method="post"
                             id="submit-recipe-form"
                         >
+                            <label for="recipe-name">Recept namn</label>
                             <input
                                 type="text"
                                 placeholder="Recept namn"
                                 required
                                 id="recipe-name"
                             />
+                            <label for="recipe-description">Beskrivning</label>
                             <textarea
                                 id="recipe-description"
                                 placeholder="Beskrivning"
@@ -36,16 +38,16 @@
                     <div id="form-right">
                         <form id="add-ingredient-form">
                             <div id="ingredient-wrapper">
-                                <label for="ingredient">Ingredient</label>
+                                <label for="ingredient">Ingrediens</label>
                                 <input
                                     id="ingredient"
                                     type="text"
-                                    placeholder="Name"
+                                    placeholder="Namn"
                                     required
                                 />
                             </div>
                             <div id="amount-wrapper">
-                                <label for="amount">Amount</label>
+                                <label for="amount">Antal</label>
                                 <input
                                     id="amount"
                                     type="number"
@@ -56,7 +58,7 @@
                                 />
                             </div>
                             <div id="unit-wrapper">
-                                <label for="unit">Unit</label>
+                                <label for="unit">Enhet</label>
                                 <select id="unit" required>
                                     <option value="" hidden selected>--</option>
                                     {{#each ingredientUnits}}
@@ -67,7 +69,7 @@
                                 </select>
                             </div>
                             <div id="category-wrapper">
-                                <label for="category">Category</label>
+                                <label for="category">Kategori</label>
                                 <select id="category" required>
                                     <option value="" hidden selected>--</option>
                                     {{#each ingredientCategories}}
@@ -78,7 +80,7 @@
                                 </select>
                             </div>
                             <button type="button" id="add-ingredient">
-                                Add
+                                <i class="fas fa-plus"></i>
                             </button>
                         </form>
                         <div class="hr"></div>
