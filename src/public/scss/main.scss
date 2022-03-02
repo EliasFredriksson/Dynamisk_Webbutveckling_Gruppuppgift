@@ -1,6 +1,7 @@
-@use "CreateRecipe";
-@use "SingleRecipe";
+@use "createRecipe";
+@use "singleRecipe";
 @use "header";
+@use "home";
 html,
 body {
     margin: 0;

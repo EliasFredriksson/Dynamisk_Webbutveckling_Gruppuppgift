@@ -1,5 +1,16 @@
-{{>header-home}}
-<main>
-    <h1>HOME</h1>
-</main>
-{{>footer-home }}
+<head>
+    <script src="/js/home.js"></script>
+</head>
+
+<div id="home-body">
+    {{>header-home}}
+    <main id="home-main">
+        <span>Sök efter Recept</span>
+        <form action="/recipes" method="get">
+            <i class="fas fa-search" id="search-icon"></i>
+            <input type="text" name="search" id="search-bar" />
+            <input type="submit" />
+        </form>
+    </main>
+    {{>footer-home }}
+</div>
