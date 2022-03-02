@@ -2,28 +2,46 @@
 
 <div class="user-create-big-container">
   <div class="user-create-big-container-two">
+
 <div class="user-create-heading-container">
-<h2>Get started</h2>
-<h3>Create a Account</h3>
+<h2 class="user-create-h2">Get started</h2>
+<h3 class="user-create-h3">Create a Account</h3>
 </div>
 
-<div class="user-create-inputfield-large-container">
-<div class="user-create-inputfield-container-one">
+  {{!-- INPUT DIV STARTS HERE --}}
+<div class="create-user-input-container">
+<div class="user-create-inputfield-large-container"> 
 <form action="/users/create" method="POST">
-  <input type="text" name="username" placeholder="Username" />
-  <input type="password" name="password" placeholder="Password" />
- 
+<div class="user-create-label-input">
+<label for="uname">Username</label>
+  <input type="text" name="username" placeholder="Username"  class="create-user-input"/>
+  </div>
+  <div class="user-create-label-input">
+  <label for="pword">Password</label>
+  <input type="password" name="password" placeholder="Password" class="create-user-input"  />
+  </div>
+  <div class="user-create-label-input">
+ <label for="pword">Confirm password</label>
   <input
     type="password"
     name="confirmpassword"
-    placeholder="Confirm password"/>
+    placeholder="Confirm password" class="create-user-input "/>
+    </div>
+    </div>
+
+  {{!-- INPUT DIV 2 STARTS HERE --}}
+  <div class="create-user-input-container2">
+  <div class="user-create-label-input">
+  <label for="email">Email</label>
+  <input type="text" name="email" placeholder="Email" class="create-user-input" />
   </div>
- 
-<div class="user-create-inputfield-container-two">
-  <input type="text" name="email" placeholder="Email" />
-  <input type="text" name="confirmemail" placeholder="Confirm email" />
-  <input type="submit" value="Register" />
+  <div class="user-create-label-input">
+  <label for="email">Confirm email</label>
+  <input type="text" name="confirmemail" placeholder="Confirm email" class="create-user-input" />
+  </div>
+  <input type="submit" value="Register" class="user-create-btn" />
 </div>
 </form>
+  </div>
 </div>
 </div>
