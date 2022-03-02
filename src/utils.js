@@ -54,7 +54,6 @@ const forceAuthorize = (req, res, next) => {
   const { token } = req.cookies;
 
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
-    console.log("forceA");
     next();
   } else {
     res.sendStatus(401);
@@ -66,9 +65,27 @@ const hashPassword = (password) => {
   return hashValue;
 };
 
+function validateUser(user) {
+  let valid = true;
+  valid = valid && user.username;
+  valid = valid && user.username.length > 0;
+  valid = valid && user.password === user.confirmPassword;
+  valid = valid && user.password.length > 0;
+  valid = valid && user.email === user.confirmemail;
+  valid =
+    valid &&
+    user.email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  return valid;
+}
+
 module.exports = {
   validateRecipe,
   comparePassword,
   forceAuthorize,
   hashPassword,
+  validateUser,
 };
