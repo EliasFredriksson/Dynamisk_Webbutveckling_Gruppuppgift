@@ -1,6 +1,10 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const UsersModels = require("../models/UsersModels.js");
+const utils = require("../utils.js");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const { validate } = require("../models/UsersModels.js");
 
 const usersRouter = express.Router();
 
@@ -8,66 +12,110 @@ const usersRouter = express.Router();
 
 usersRouter.get("/create", (req, res) => {
   res.render("users-create");
-  console.log("console log create get");
 });
 
 //Post: / users-create
 usersRouter.post("/create", async (req, res) => {
-  const { username, hashedPassword, email, recipes, image } = req.body;
-  console.log("console log post create");
+  const validatUser = {
+    username: req.body.username,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    email: req.body.email,
+    confirmemail: req.body.confirmemail,
+  };
+  if (utils.validateUser(validatUser)) {
+    UsersModels.findOne({ username }, async (err, user) => {
+      if (user) {
+        res.send(409).redirect("/");
+      } else if (password !== confirmPassword) {
+        res.send("Password dont match");
+      } else {
+        const newUser = new UsersModels({
+          username: username,
+          hashedPassword: utils.hashPassword(password),
+          email: email,
+          recipes: [],
+          image: "Temporary image string",
+        });
 
-  const newUser = new UsersModels({
-    username: username,
-    hashedPassword: "temporary password",
-    email: email,
-    recipes: [],
-    image: "Temporary image string",
-  });
-  await newUser.save();
-  res.redirect("/");
+        await newUser.save();
+        res.redirect("/");
+      }
+    });
+  } else {
+    res.status(401).send("Fel på inmatad data");
+  }
 });
 
 //Get: / users-edit
-usersRouter.get("/edit", async (req, res) => {
-  console.log("console log get edit");
-
-  const userId = "621cab72599c287c4d1ec784";
-  const user = await UsersModels.findById(userId).lean();
-  res.render("users-edit", {
-    user: user,
-  });
+usersRouter.get("/edit", utils.forceAuthorize, async (req, res) => {
+  const user = await UsersModels.findById(req.params.id).lean();
+  console.log(user);
+  res.render("users-edit", user);
 });
 
 //Post: / users-edit
-usersRouter.post("/edit", async (req, res) => {
-  console.log("console log  post edit");
-  const { username, hashedPassword, email, recipes, image } = req.body;
-  //Temporary user id for testing ##################
-  const userId = "621cf8afb2fc1a28d502a8cd";
-  //############
-  await UsersModels.findByIdAndUpdate(userId, {
-    username: username,
-    hashedPassword: "temporary password",
-    email: email,
-    recipes: [],
-    image: image,
-  });
-
-  res.redirect("/");
+usersRouter.post("/edit", utils.forceAuthorize, async (req, res) => {
+  const id = res.locals.id;
+  const validatUser = {
+    username: req.body.username,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    email: req.body.email,
+    confirmemail: req.body.confirmemail,
+  };
+  if (utils.validateUser(validatUser)) {
+    await UsersModels.findOneAndUpdate(
+      { _id: id },
+      {
+        username: req.body.username,
+        hashedPassword: utils.hashPassword(req.body.password),
+        email: req.body.email,
+      }
+    );
+    res.redirect("/");
+  } else {
+    res.status(409).send("Fel inmatade data");
+  }
 });
 
-// Delete recipe
+usersRouter.get("/:id", (req, res) => {
+  res.render("users-single");
+});
+
 usersRouter.post("/delete", async (req, res) => {
-  //#####Temporary user id for testing###############
-  const userId = "621cf8c7b2fc1a28d502a8d1";
-  //##############################
-  UsersModels.findByIdAndDelete(
-    { _id: new mongoose.Types.ObjectId(userId) },
-    (error, docs) => {
-      if (error) res.status(500).redirect(`/users/${req.params.id}`);
-      else res.status(200).redirect("/");
+  const id = res.locals.id;
+  UsersModels.findOneAndDelete({ _id: id }, (err) => {
+    res.clearCookie("token");
+    if (err) res.status(500).redirect(`/users/${req.params.id}`);
+    else res.status(200).redirect("/");
+  });
+});
+
+// Login
+usersRouter.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  UsersModels.findOne({ username }, (err, user) => {
+    if (user && utils.comparePassword(password, user.hashedPassword)) {
+      const userData = {
+        _id: user._id,
+        username,
+      };
+      console.log(userData);
+      const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+
+      res.cookie("token", accessToken);
+      res.redirect("/");
+    } else {
+      res.status(400).send("login Failed");
     }
-  );
+  });
+});
+
+// Logout
+usersRouter.post("/logout", (req, res) => {
+  res.cookie("token", "", { maxAge: 0 });
+  res.redirect("/");
 });
 
 //Get id
