@@ -45,7 +45,6 @@ app.use((req, res, next) => {
     res.locals.loggedIn = true;
     res.locals.username = tokenData.username;
     res.locals.id = tokenData._id;
-    // console.log(tokenData._id);
   } else {
     res.locals.loggedIn = false;
   }
