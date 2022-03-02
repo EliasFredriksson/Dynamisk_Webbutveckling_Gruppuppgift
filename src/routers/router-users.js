@@ -83,17 +83,6 @@ usersRouter.get("/:id", (req, res) => {
   res.render("users-single");
 });
 
-// Delete user
-// usersRouter.post("/delete", async (req, res) => {
-//   const _id = res.locals.id;
-//   console.log(_id);
-//   UsersModels.findByIdAndDelete(_id, (error, docs) => {
-//     res.clearCookie("token");
-//     if (error) res.status(500).redirect(`/users/${req.params.id}`);
-//     else res.status(200).redirect("/");
-//   });
-// });
-
 usersRouter.post("/delete", async (req, res) => {
   const id = res.locals.id;
   UsersModels.findOneAndDelete({ _id: id }, (err) => {
