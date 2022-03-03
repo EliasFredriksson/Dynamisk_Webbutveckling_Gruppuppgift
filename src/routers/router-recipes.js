@@ -6,7 +6,7 @@ const { validateRecipe, validateComment, forceAuthorize } = require("../utils");
 const RecipesModel = require("../models/RecipesModel.js");
 const UsersModel = require("../models/UsersModels.js");
 const CommentsModel = require("../models/CommentsModel");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 const recipesRouter = express.Router();
 
@@ -21,7 +21,10 @@ recipesRouter.get("/create", forceAuthorize, (req, res) => {
         ingredientCategories: settings.INGREDIENT_CATEGORIES,
     });
 });
+
 // Create new recipe and save to database.
+// MISSING:
+//      Adding the recipe to the currently logged in users recipe.
 recipesRouter.post("/create", forceAuthorize, async (req, res) => {
     const { name, description, image, ingredients } = req.body;
     try {
@@ -42,6 +45,7 @@ recipesRouter.post("/create", forceAuthorize, async (req, res) => {
             ingredients: ingredients,
             comments: [],
         });
+
         await newRecipe.save();
         res.status(201).send(newRecipe._id);
     } catch (error) {
@@ -82,6 +86,8 @@ recipesRouter.get("/:id", async (req, res) => {
 });
 // ######################## UPDATE ########################
 // Go to Update (Edit) recipe page.
+// MISSING:
+//      Middleware to check that the recipe is your own.
 recipesRouter.get("/:id/edit", forceAuthorize, (req, res) => {
     RecipesModel.findById(req.params.id, (error, recipe) => {
         if (error) res.status(500).redirect(`/`);
@@ -94,6 +100,8 @@ recipesRouter.get("/:id/edit", forceAuthorize, (req, res) => {
     });
 });
 // Update recipe and save to database.
+// MISSING:
+//      Middleware to check that the recipe is your own.
 recipesRouter.post("/:id/edit", forceAuthorize, (req, res) => {
     const { name, chefId, description, image, ingredients } = req.body;
     try {
