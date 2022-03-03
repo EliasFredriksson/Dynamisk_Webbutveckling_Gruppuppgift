@@ -35,6 +35,7 @@ usersRouter.post("/create", async (req, res) => {
         const newUser = new UsersModels({
           username: username,
           hashedPassword: utils.hashPassword(password),
+
           email: email,
           recipes: [],
           image: "Temporary image string",
@@ -59,6 +60,9 @@ usersRouter.get("/edit", utils.forceAuthorize, async (req, res) => {
 //Post: / users-edit
 usersRouter.post("/edit", utils.forceAuthorize, async (req, res) => {
   const id = res.locals.id;
+
+  console.log("BODY:\n", req.body);
+
   const validateUser = {
     username: req.body.username,
     password: req.body.password,
@@ -67,20 +71,24 @@ usersRouter.post("/edit", utils.forceAuthorize, async (req, res) => {
     confirmemail: req.body.confirmemail,
   };
   if (utils.validateUser(validateUser)) {
-    await UsersModels.findOneAndUpdate(
-      { _id: id },
+    UsersModels.findByIdAndUpdate(
+      id,
       {
         username: req.body.username,
         hashedPassword: utils.hashPassword(req.body.password),
         email: req.body.email,
+      },
+      (error, docs, result) => {
+        if (error) throw error;
+        else res.status(200).redirect("/");
       }
     );
-    res.redirect("/");
   } else {
     res.status(409).send("Fel inmatade data");
   }
 });
 
+//Post / Delete
 usersRouter.post("/delete", async (req, res) => {
   const id = res.locals.id;
   UsersModels.findOneAndDelete({ _id: id }, (err) => {
