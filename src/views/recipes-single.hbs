@@ -46,7 +46,7 @@
                     >
                 </div>
             </div>
-            {{!-- {{#if loggedIn}} --}}
+            {{#if loggedIn}}
             <div id="recipe-footer">
                 <form action="#" method="post">
                     <input
@@ -61,7 +61,33 @@
                     />
                 </form>
             </div>
+            {{/if}}
+            <div class="divider"></div>
+
+            {{!-- {{#if loggedIn}} --}}
+            <div id="new-comment-wrapper">
+                <span>Kommentera</span>
+                <form
+                    action="/recipes/{{ recipe._id }}/comments/add"
+                    id="new-comment-form"
+                    method="post"
+                >
+                    <textarea name="text" id="new-comment-text"></textarea>
+                    <input type="submit" value="Lägg till" />
+                </form>
+            </div>
             {{!-- {{/if}} --}}
+            <div class="divider"></div>
+            <div id="recipe-comments">
+                {{#each recipe.comments}}
+                <div class="recipe-comment">
+                    <a href="/users/{{ user._id }}"
+                        ><span>{{ user.username }}</span></a
+                    >
+                    <textarea class="recipe-comment-text">{{ text }}</textarea>
+                </div>
+                {{/each}}
+            </div>
         </div>
     </main>
     {{>footer-home }}

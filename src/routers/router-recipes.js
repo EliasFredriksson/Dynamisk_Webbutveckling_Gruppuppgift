@@ -29,13 +29,14 @@ recipesRouter.post("/create", async (req, res) => {
     const chefId = new mongoose.Types.ObjectId();
     // #############################
     try {
-        validateRecipe(name, chefId, description, image, ingredients);
+        validateRecipe(name, chefId, description, image, ingredients, []);
         const newRecipe = new RecipesModel({
             name: name,
             chef: mongoose.Types.ObjectId(chefId),
             description: description,
             image: "IMAGE_PLACEHOLDER",
             ingredients: ingredients,
+            comments: [],
         });
         await newRecipe.save();
         res.status(201).send(newRecipe._id);
@@ -53,7 +54,9 @@ recipesRouter.post("/create", async (req, res) => {
 recipesRouter.get("/:id", async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) throw "Invalid Id";
-        const recipe = await RecipesModel.findById(req.params.id).lean();
+        const recipe = await RecipesModel.findById(req.params.id)
+            .populate("comments.user")
+            .lean();
         const chef = await UsersModel.findById(recipe.chef).lean();
 
         let recipeCategories = [];
@@ -89,7 +92,7 @@ recipesRouter.get("/:id/edit", (req, res) => {
 recipesRouter.post("/:id/edit", (req, res) => {
     const { name, chefId, description, image, ingredients } = req.body;
     try {
-        validateRecipe(name, chefId, description, image, ingredients);
+        validateRecipe(name, chefId, description, image, ingredients, []);
         RecipesModel.findByIdAndUpdate(
             req.params.id,
             {
@@ -118,6 +121,9 @@ recipesRouter.post("/:id/delete", async (req, res) => {
         else res.status(200).redirect("/");
     });
 });
+
+// ######################## COMMENT ########################
+recipesRouter.post("/:id/comments/add", async (req, res) => {});
 // ########################################################
 
 module.exports = recipesRouter;
