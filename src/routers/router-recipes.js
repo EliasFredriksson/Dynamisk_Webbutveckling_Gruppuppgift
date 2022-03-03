@@ -13,7 +13,7 @@ const recipesRouter = express.Router();
 // ===== ROUTES =====
 // ####################### CREATE #######################
 // Go to create recipe page.
-recipesRouter.get("/create", (req, res) => {
+recipesRouter.get("/create", forceAuthorize, (req, res) => {
     // res.status(200).send("Sent back to create page.");
     res.render("recipes-create", {
         title: "Create Recipe",
@@ -22,18 +22,21 @@ recipesRouter.get("/create", (req, res) => {
     });
 });
 // Create new recipe and save to database.
-recipesRouter.post("/create", async (req, res) => {
+recipesRouter.post("/create", forceAuthorize, async (req, res) => {
     const { name, description, image, ingredients } = req.body;
-    // const parsedIngredients = JSON.parse(ingredients);
-
-    // TEMPORARY
-    const chefId = new mongoose.Types.ObjectId();
-    // #############################
     try {
-        validateRecipe(name, chefId, description, image, ingredients, []);
+        if (!res.locals.loggedIn) throw "Not logged in.";
+        validateRecipe(
+            name,
+            res.locals.id,
+            description,
+            image,
+            ingredients,
+            []
+        );
         const newRecipe = new RecipesModel({
             name: name,
-            chef: mongoose.Types.ObjectId(chefId),
+            chef: new mongoose.Types.ObjectId(res.locals.id),
             description: description,
             image: "IMAGE_PLACEHOLDER",
             ingredients: ingredients,
@@ -79,7 +82,7 @@ recipesRouter.get("/:id", async (req, res) => {
 });
 // ######################## UPDATE ########################
 // Go to Update (Edit) recipe page.
-recipesRouter.get("/:id/edit", (req, res) => {
+recipesRouter.get("/:id/edit", forceAuthorize, (req, res) => {
     RecipesModel.findById(req.params.id, (error, recipe) => {
         if (error) res.status(500).redirect(`/`);
         if (recipe) res.status(200).redirect("/");
@@ -91,7 +94,7 @@ recipesRouter.get("/:id/edit", (req, res) => {
     });
 });
 // Update recipe and save to database.
-recipesRouter.post("/:id/edit", (req, res) => {
+recipesRouter.post("/:id/edit", forceAuthorize, (req, res) => {
     const { name, chefId, description, image, ingredients } = req.body;
     try {
         validateRecipe(name, chefId, description, image, ingredients, []);
@@ -117,7 +120,7 @@ recipesRouter.post("/:id/edit", (req, res) => {
 });
 // ######################## DELETE ########################
 // Delete recipe
-recipesRouter.post("/:id/delete", async (req, res) => {
+recipesRouter.post("/:id/delete", forceAuthorize, async (req, res) => {
     RecipesModel.findByIdAndDelete(req.params.id, (error, docs) => {
         if (error) res.status(500).redirect(`/recipe/${req.params.id}`);
         else res.status(200).redirect("/");
@@ -128,16 +131,15 @@ recipesRouter.post("/:id/delete", async (req, res) => {
 // MISSING:
 //      Middleware to check if the comment is your own
 // Create comment
-recipesRouter.post("/:id/comments/add", async (req, res) => {
+recipesRouter.post("/:id/comments/add", forceAuthorize, async (req, res) => {
     try {
-        // ############# TEMPORARY #############
-        const testUserId = new mongoose.Types.ObjectId();
-        validateComment(req.body.text, testUserId);
+        if (!res.locals.loggedIn) throw "Not logged in.";
+        validateComment(req.body.text, res.locals.id);
 
         const newComment = new CommentsModel({
             text: req.body.text,
-            userId: testUserId,
-            username: "Elias Fredriksson",
+            userId: new mongoose.Types.ObjectId(res.locals.id),
+            username: res.locals.username,
         });
         const commentResult = await newComment.save();
         RecipesModel.findByIdAndUpdate(
@@ -162,56 +164,67 @@ recipesRouter.post("/:id/comments/add", async (req, res) => {
 });
 
 // Edit comment
-recipesRouter.post("/:id/comments/edit/:commentId", async (req, res) => {
-    try {
-        validateComment(req.body.text, req.params.commentId);
-        CommentsModel.findByIdAndUpdate(
-            req.params.commentId,
-            {
-                text: req.body.text,
-            },
-            (error, docs, result) => {
-                if (error) res.sendStatus(500);
-                else res.sendStatus(200);
-            }
-        );
-    } catch (error) {
-        console.log("\n\nERROR: ", error);
-        res.status(400).redirect("/");
+recipesRouter.post(
+    "/:id/comments/edit/:commentId",
+    forceAuthorize,
+    async (req, res) => {
+        try {
+            validateComment(req.body.text, req.params.commentId);
+            CommentsModel.findByIdAndUpdate(
+                req.params.commentId,
+                {
+                    text: req.body.text,
+                },
+                (error, docs, result) => {
+                    if (error) res.sendStatus(500);
+                    else res.sendStatus(200);
+                }
+            );
+        } catch (error) {
+            console.log("\n\nERROR: ", error);
+            res.status(400).redirect("/");
+        }
     }
-});
+);
 
 // Delete comment
-recipesRouter.post("/:id/comments/remove/:commentId", async (req, res) => {
-    RecipesModel.findByIdAndUpdate(
-        req.params.id,
-        {
-            $pull: {
-                comments: {
-                    comment: new mongoose.Types.ObjectId(req.params.commentId),
+recipesRouter.post(
+    "/:id/comments/remove/:commentId",
+    forceAuthorize,
+    async (req, res) => {
+        RecipesModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                $pull: {
+                    comments: {
+                        comment: new mongoose.Types.ObjectId(
+                            req.params.commentId
+                        ),
+                    },
                 },
             },
-        },
-        (error, docs, result) => {
-            if (error) res.status(500).redirect("/recipes/" + req.params.id);
-            else {
-                CommentsModel.findByIdAndDelete(
-                    req.params.commentId,
-                    (error, docs) => {
-                        if (error)
-                            res.status(500).redirect(
-                                `/recipe/${req.params.id}`
-                            );
-                        else
-                            res.status(200).redirect(
-                                "/recipes/" + req.params.id
-                            );
-                    }
-                );
+            (error, docs, result) => {
+                if (error)
+                    res.status(500).redirect("/recipes/" + req.params.id);
+                else {
+                    CommentsModel.findByIdAndDelete(
+                        req.params.commentId,
+                        (error, docs) => {
+                            if (error)
+                                res.status(500).redirect(
+                                    `/recipe/${req.params.id}`
+                                );
+                            else
+                                res.status(200).redirect(
+                                    "/recipes/" + req.params.id
+                                );
+                        }
+                    );
+                }
             }
-        }
-    );
-});
+        );
+    }
+);
 // ########################################################
 
 module.exports = recipesRouter;
