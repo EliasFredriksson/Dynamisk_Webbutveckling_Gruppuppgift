@@ -68,7 +68,7 @@
             {{/if}}
             <div class="divider"></div>
 
-            {{!-- {{#if loggedIn}} --}}
+            {{#if loggedIn}}
             <div id="new-comment-wrapper">
                 <span>Kommentera</span>
                 <form
@@ -80,10 +80,11 @@
                     <input type="submit" value="Lägg till" />
                 </form>
             </div>
-            {{!-- {{/if}} --}}
-
             <div class="divider"></div>
+            {{/if}}
+
             <div id="recipe-comments">
+                <span>Kommentarer</span>
                 {{#each recipe.comments}}
                 <div class="comment">
                     <div class="comment-user-info">
