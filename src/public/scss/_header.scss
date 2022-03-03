@@ -8,7 +8,7 @@ header {
     .history-back {
         height: 35px;
         width: 35px;
-        border: 1px solid black;
+        border: 1px solid rgb(111, 111, 111);
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -26,7 +26,7 @@ header {
         }
     }
     .logo {
-        margin-left: 100px;
+        margin-left: 30px;
     }
     .login-container {
         padding: 20px;
@@ -45,6 +45,9 @@ header {
                     input {
                         /* border-radius: 10px; */
                         padding: 5px;
+                    }
+                    input:focus {
+                        outline: none;
                     }
                 }
             }
@@ -79,7 +82,7 @@ header {
 
         // border: 2px solid red;
         // box-sizing: border-box;
-        width: 32%;
+        width: 36%;
 
         a {
             color: white;
@@ -98,6 +101,7 @@ header {
             transition: 200ms ease-in-out;
             span {
                 transition: 200ms ease-in-out;
+                font-size: 0.9em;
             }
         }
 
@@ -107,6 +111,7 @@ header {
 
             span {
                 transform: scale(1.1) translateY(-3px);
+                text-shadow: 0px 0px 5px #404040;
             }
         }
     }

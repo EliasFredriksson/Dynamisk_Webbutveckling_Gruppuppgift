@@ -8,4 +8,12 @@ window.onload = () => {
         if (searchBar.value.length <= 0) searchIcon.style.display = "flex";
         else searchIcon.style.display = "none";
     });
+
+    searchBar.addEventListener("focusin", () => {
+        searchIcon.style.display = "none";
+    });
+    searchBar.addEventListener("focusout", () => {
+        if (searchBar.value.length <= 0) searchIcon.style.display = "flex";
+        else searchIcon.style.display = "none";
+    });
 };
