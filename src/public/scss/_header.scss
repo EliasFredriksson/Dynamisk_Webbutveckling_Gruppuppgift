@@ -77,11 +77,8 @@ header {
         left: 50%;
         transform: translateX(-50%);
         display: flex;
-        justify-content: stretch;
+        justify-content: center;
         height: 100%;
-
-        // border: 2px solid red;
-        // box-sizing: border-box;
         width: 36%;
 
         a {
