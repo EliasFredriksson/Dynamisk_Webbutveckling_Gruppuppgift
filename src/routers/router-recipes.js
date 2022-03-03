@@ -2,9 +2,10 @@ const express = require("express");
 
 const settings = require("../settings");
 
-const { validateRecipe } = require("../utils");
+const { validateRecipe, validateComment, forceAuthorize } = require("../utils");
 const RecipesModel = require("../models/RecipesModel.js");
 const UsersModel = require("../models/UsersModels.js");
+const CommentsModel = require("../models/CommentsModel");
 const { default: mongoose } = require("mongoose");
 
 const recipesRouter = express.Router();
@@ -29,13 +30,14 @@ recipesRouter.post("/create", async (req, res) => {
     const chefId = new mongoose.Types.ObjectId();
     // #############################
     try {
-        validateRecipe(name, chefId, description, image, ingredients);
+        validateRecipe(name, chefId, description, image, ingredients, []);
         const newRecipe = new RecipesModel({
             name: name,
             chef: mongoose.Types.ObjectId(chefId),
             description: description,
             image: "IMAGE_PLACEHOLDER",
             ingredients: ingredients,
+            comments: [],
         });
         await newRecipe.save();
         res.status(201).send(newRecipe._id);
@@ -53,7 +55,9 @@ recipesRouter.post("/create", async (req, res) => {
 recipesRouter.get("/:id", async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) throw "Invalid Id";
-        const recipe = await RecipesModel.findById(req.params.id).lean();
+        const recipe = await RecipesModel.findById(req.params.id)
+            .populate("comments.comment")
+            .lean();
         const chef = await UsersModel.findById(recipe.chef).lean();
 
         let recipeCategories = [];
@@ -61,6 +65,7 @@ recipesRouter.get("/:id", async (req, res) => {
             if (!recipeCategories.includes(entry.category))
                 recipeCategories.push(entry.category);
         });
+
         res.render("recipes-single", {
             title: recipe.name,
             recipe: recipe,
@@ -89,7 +94,7 @@ recipesRouter.get("/:id/edit", (req, res) => {
 recipesRouter.post("/:id/edit", (req, res) => {
     const { name, chefId, description, image, ingredients } = req.body;
     try {
-        validateRecipe(name, chefId, description, image, ingredients);
+        validateRecipe(name, chefId, description, image, ingredients, []);
         RecipesModel.findByIdAndUpdate(
             req.params.id,
             {
@@ -117,6 +122,95 @@ recipesRouter.post("/:id/delete", async (req, res) => {
         if (error) res.status(500).redirect(`/recipe/${req.params.id}`);
         else res.status(200).redirect("/");
     });
+});
+
+// ######################## COMMENT ########################
+// MISSING:
+//      Middleware to check if the comment is your own
+// Create comment
+recipesRouter.post("/:id/comments/add", async (req, res) => {
+    try {
+        // ############# TEMPORARY #############
+        const testUserId = new mongoose.Types.ObjectId();
+        validateComment(req.body.text, testUserId);
+
+        const newComment = new CommentsModel({
+            text: req.body.text,
+            userId: testUserId,
+            username: "Elias Fredriksson",
+        });
+        const commentResult = await newComment.save();
+        RecipesModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: { comments: { comment: commentResult._id } },
+            },
+            (error, docs, result) => {
+                if (error)
+                    res.status(500).redirect("/recipes/" + req.params.id);
+                else res.status(200).redirect("/recipes/" + req.params.id);
+            }
+        );
+    } catch (error) {
+        console.log(
+            "\n\n================= ERROR =================\n",
+            error,
+            "\n\n"
+        );
+        res.status(400).send(error);
+    }
+});
+
+// Edit comment
+recipesRouter.post("/:id/comments/edit/:commentId", async (req, res) => {
+    try {
+        validateComment(req.body.text, req.params.commentId);
+        CommentsModel.findByIdAndUpdate(
+            req.params.commentId,
+            {
+                text: req.body.text,
+            },
+            (error, docs, result) => {
+                if (error) res.sendStatus(500);
+                else res.sendStatus(200);
+            }
+        );
+    } catch (error) {
+        console.log("\n\nERROR: ", error);
+        res.status(400).redirect("/");
+    }
+});
+
+// Delete comment
+recipesRouter.post("/:id/comments/remove/:commentId", async (req, res) => {
+    RecipesModel.findByIdAndUpdate(
+        req.params.id,
+        {
+            $pull: {
+                comments: {
+                    comment: new mongoose.Types.ObjectId(req.params.commentId),
+                },
+            },
+        },
+        (error, docs, result) => {
+            if (error) res.status(500).redirect("/recipes/" + req.params.id);
+            else {
+                CommentsModel.findByIdAndDelete(
+                    req.params.commentId,
+                    (error, docs) => {
+                        if (error)
+                            res.status(500).redirect(
+                                `/recipe/${req.params.id}`
+                            );
+                        else
+                            res.status(200).redirect(
+                                "/recipes/" + req.params.id
+                            );
+                    }
+                );
+            }
+        }
+    );
 });
 // ########################################################
 

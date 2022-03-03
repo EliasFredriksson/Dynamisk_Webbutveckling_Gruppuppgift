@@ -1,3 +1,7 @@
+<head>
+    <script src="/js/recipes-single.js"></script>
+</head>
+
 <div id="single-recipe-body">
     {{>header-home}}
     <main>
@@ -46,7 +50,7 @@
                     >
                 </div>
             </div>
-            {{!-- {{#if loggedIn}} --}}
+            {{#if loggedIn}}
             <div id="recipe-footer">
                 <form action="#" method="post">
                     <input
@@ -61,7 +65,71 @@
                     />
                 </form>
             </div>
+            {{/if}}
+            <div class="divider"></div>
+
+            {{!-- {{#if loggedIn}} --}}
+            <div id="new-comment-wrapper">
+                <span>Kommentera</span>
+                <form
+                    action="/recipes/{{ recipe._id }}/comments/add"
+                    id="new-comment-form"
+                    method="post"
+                >
+                    <textarea name="text" id="new-comment-text"></textarea>
+                    <input type="submit" value="Lägg till" />
+                </form>
+            </div>
             {{!-- {{/if}} --}}
+
+            <div class="divider"></div>
+            <div id="recipe-comments">
+                {{#each recipe.comments}}
+                <div class="comment">
+                    <div class="comment-user-info">
+                        <div class="img-wrapper">
+                            <img
+                                src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png"
+                            />
+                        </div>
+                        <a href="/users/{{ comment.userId }}"
+                            ><span>{{ comment.username }}</span></a
+                        >
+                    </div>
+                    <div class="comment-text-wrapper">
+                        <form method="post">
+                            <textarea class="recipe-comment-text" disabled>{{
+                                comment.text
+                            }}</textarea>
+                            {{#if isOwnComment}}
+
+                            <input
+                                type="button"
+                                value="Redigera"
+                                data-commentId="{{ comment._id }}"
+                                class="enter-edit"
+                            />
+
+                            <input
+                                type="button"
+                                value="Klar"
+                                data-done=""
+                                class="finish-edit"
+                            />
+
+                            <input
+                                type="submit"
+                                value="Ta bort"
+                                formaction="/recipes/{{ ../recipe._id }}/comments/remove/{{
+                                    comment._id
+                                }}"
+                            />
+                            {{/if}}
+                        </form>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
         </div>
     </main>
     {{>footer-home }}
