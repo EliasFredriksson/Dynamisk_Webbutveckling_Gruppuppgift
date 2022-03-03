@@ -16,14 +16,16 @@ usersRouter.get("/create", (req, res) => {
 
 //Post: / users-create
 usersRouter.post("/create", async (req, res) => {
-  const validatUser = {
+  const validateUser = {
     username: req.body.username,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
     email: req.body.email,
     confirmemail: req.body.confirmemail,
   };
-  if (utils.validateUser(validatUser)) {
+  if (utils.validateUser(validateUser)) {
+    const { username, email, password, confirmPassword, confirmemail } =
+      req.body;
     UsersModels.findOne({ username }, async (err, user) => {
       if (user) {
         res.send(409).redirect("/");
@@ -33,6 +35,7 @@ usersRouter.post("/create", async (req, res) => {
         const newUser = new UsersModels({
           username: username,
           hashedPassword: utils.hashPassword(password),
+
           email: email,
           recipes: [],
           image: "Temporary image string",
@@ -57,32 +60,35 @@ usersRouter.get("/edit", utils.forceAuthorize, async (req, res) => {
 //Post: / users-edit
 usersRouter.post("/edit", utils.forceAuthorize, async (req, res) => {
   const id = res.locals.id;
-  const validatUser = {
+
+  console.log("BODY:\n", req.body);
+
+  const validateUser = {
     username: req.body.username,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
     email: req.body.email,
     confirmemail: req.body.confirmemail,
   };
-  if (utils.validateUser(validatUser)) {
-    await UsersModels.findOneAndUpdate(
-      { _id: id },
+  if (utils.validateUser(validateUser)) {
+    UsersModels.findByIdAndUpdate(
+      id,
       {
         username: req.body.username,
         hashedPassword: utils.hashPassword(req.body.password),
         email: req.body.email,
+      },
+      (error, docs, result) => {
+        if (error) throw error;
+        else res.status(200).redirect("/");
       }
     );
-    res.redirect("/");
   } else {
     res.status(409).send("Fel inmatade data");
   }
 });
 
-usersRouter.get("/:id", (req, res) => {
-  res.render("users-single");
-});
-
+//Post / Delete
 usersRouter.post("/delete", async (req, res) => {
   const id = res.locals.id;
   UsersModels.findOneAndDelete({ _id: id }, (err) => {
@@ -121,13 +127,8 @@ usersRouter.post("/logout", (req, res) => {
 //Get id
 usersRouter.get("/:id", async (req, res) => {
   const user = await UsersModels.findById(req.params.id);
-  // UsersModels.find({ _id: new mongoose.Types.ObjectId(req.params.id) });
 
-  try {
-    res.send(user);
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  res.render("users-single", user);
 });
 
 module.exports = usersRouter;
