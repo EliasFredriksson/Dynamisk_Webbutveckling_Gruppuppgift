@@ -1,3 +1,7 @@
+<head>
+    <script src="/js/recipes-single.js"></script>
+</head>
+
 <div id="single-recipe-body">
     {{>header-home}}
     <main>
@@ -93,16 +97,34 @@
                         >
                     </div>
                     <div class="comment-text-wrapper">
-                        <form
-                            action="/recipes/{{ ../recipe._id }}/comments/remove/{{
-                                comment._id
-                            }}"
-                            method="post"
-                        >
+                        <form method="post">
                             <textarea class="recipe-comment-text" disabled>{{
                                 comment.text
                             }}</textarea>
-                            <input type="submit" value="Ta bort" />
+                            {{#if isOwnComment}}
+
+                            <input
+                                type="button"
+                                value="Redigera"
+                                data-commentId="{{ comment._id }}"
+                                class="enter-edit"
+                            />
+
+                            <input
+                                type="button"
+                                value="Klar"
+                                data-done=""
+                                class="finish-edit"
+                            />
+
+                            <input
+                                type="submit"
+                                value="Ta bort"
+                                formaction="/recipes/{{ ../recipe._id }}/comments/remove/{{
+                                    comment._id
+                                }}"
+                            />
+                            {{/if}}
                         </form>
                     </div>
                 </div>

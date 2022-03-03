@@ -125,6 +125,9 @@ recipesRouter.post("/:id/delete", async (req, res) => {
 });
 
 // ######################## COMMENT ########################
+// MISSING:
+//      Middleware to check if the comment is your own
+// Create comment
 recipesRouter.post("/:id/comments/add", async (req, res) => {
     try {
         // ############# TEMPORARY #############
@@ -158,23 +161,18 @@ recipesRouter.post("/:id/comments/add", async (req, res) => {
     }
 });
 
-recipesRouter.post("/:id/comments/edit", async (req, res) => {
+// Edit comment
+recipesRouter.post("/:id/comments/edit/:commentId", async (req, res) => {
     try {
-        // ################### TEMPORARY ###################
-        let tempId = mongoose.Types.ObjectId(tempId);
-        // ####
-        validateComment(req.body.text, tempId);
+        validateComment(req.body.text, req.params.commentId);
         CommentsModel.findByIdAndUpdate(
-            req.params.id,
+            req.params.commentId,
             {
                 text: req.body.text,
-                userId: new mongoose.Types.ObjectId(tempId),
-                username: "[PLACEHOLDER_USERNAME]",
             },
             (error, docs, result) => {
-                if (error)
-                    res.status(500).redirect(`/recipes/${req.params.id}`);
-                else res.status(200).redirect(`/recipes/${req.params.id}`);
+                if (error) res.sendStatus(500);
+                else res.sendStatus(200);
             }
         );
     } catch (error) {
@@ -183,6 +181,7 @@ recipesRouter.post("/:id/comments/edit", async (req, res) => {
     }
 });
 
+// Delete comment
 recipesRouter.post("/:id/comments/remove/:commentId", async (req, res) => {
     RecipesModel.findByIdAndUpdate(
         req.params.id,
