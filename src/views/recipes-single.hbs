@@ -102,8 +102,9 @@
                             <textarea class="recipe-comment-text" disabled>{{
                                 comment.text
                             }}</textarea>
-                            {{#if isOwnComment}}
 
+                            {{!-- THIS VALUE SHOULD BE SET BY A MIDDLEWARE THATS CURRENTLY MISSING --}}
+                            {{#if isOwnComment}}
                             <input
                                 type="button"
                                 value="Redigera"
@@ -114,7 +115,6 @@
                             <input
                                 type="button"
                                 value="Klar"
-                                data-done=""
                                 class="finish-edit"
                             />
 

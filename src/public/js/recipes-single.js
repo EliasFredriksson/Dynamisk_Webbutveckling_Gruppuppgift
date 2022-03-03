@@ -9,11 +9,6 @@ window.onload = () => {
             const finishButton = tag.children[1].children[0].children[2];
             const textarea = tag.children[1].children[0].children[0];
             editButton.addEventListener("click", () => {
-                let commentId = editButton.getAttribute("data-commentId");
-
-                console.log("CLICKED");
-                console.log("ID: ", commentId);
-
                 editButton.style.display = "none";
                 finishButton.style.display = "block";
                 textarea.disabled = false;
@@ -22,12 +17,7 @@ window.onload = () => {
             finishButton.addEventListener("click", () => {
                 let commentId = editButton.getAttribute("data-commentId");
                 let newText = textarea.value;
-
-                console.log("FINISHED");
-                console.log("TEXR: ", newText);
-
                 doCommentEditFetch(commentId, newText);
-
                 editButton.style.display = "block";
                 finishButton.style.display = "none";
                 textarea.disabled = true;

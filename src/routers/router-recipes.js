@@ -136,9 +136,9 @@ recipesRouter.post("/:id/delete", forceAuthorize, async (req, res) => {
 });
 
 // ######################## COMMENT ########################
+// Create comment
 // MISSING:
 //      Middleware to check if the comment is your own
-// Create comment
 recipesRouter.post("/:id/comments/add", forceAuthorize, async (req, res) => {
     try {
         if (!res.locals.loggedIn) throw "Not logged in.";
@@ -172,6 +172,8 @@ recipesRouter.post("/:id/comments/add", forceAuthorize, async (req, res) => {
 });
 
 // Edit comment
+// MISSING:
+//      Middleware to check if the comment is your own
 recipesRouter.post(
     "/:id/comments/edit/:commentId",
     forceAuthorize,
@@ -196,6 +198,8 @@ recipesRouter.post(
 );
 
 // Delete comment
+// MISSING:
+//      Middleware to check if the comment is your own
 recipesRouter.post(
     "/:id/comments/remove/:commentId",
     forceAuthorize,
