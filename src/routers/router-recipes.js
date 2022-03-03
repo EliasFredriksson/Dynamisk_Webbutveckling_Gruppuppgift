@@ -2,9 +2,10 @@ const express = require("express");
 
 const settings = require("../settings");
 
-const { validateRecipe } = require("../utils");
+const { validateRecipe, validateComment, forceAuthorize } = require("../utils");
 const RecipesModel = require("../models/RecipesModel.js");
 const UsersModel = require("../models/UsersModels.js");
+const CommentsModel = require("../models/CommentsModel");
 const { default: mongoose } = require("mongoose");
 
 const recipesRouter = express.Router();
@@ -55,7 +56,7 @@ recipesRouter.get("/:id", async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) throw "Invalid Id";
         const recipe = await RecipesModel.findById(req.params.id)
-            .populate("comments.user")
+            .populate("comments.comment")
             .lean();
         const chef = await UsersModel.findById(recipe.chef).lean();
 
@@ -64,6 +65,7 @@ recipesRouter.get("/:id", async (req, res) => {
             if (!recipeCategories.includes(entry.category))
                 recipeCategories.push(entry.category);
         });
+
         res.render("recipes-single", {
             title: recipe.name,
             recipe: recipe,
@@ -123,7 +125,94 @@ recipesRouter.post("/:id/delete", async (req, res) => {
 });
 
 // ######################## COMMENT ########################
-recipesRouter.post("/:id/comments/add", async (req, res) => {});
+recipesRouter.post("/:id/comments/add", async (req, res) => {
+    try {
+        // ############# TEMPORARY #############
+        const testUserId = new mongoose.Types.ObjectId();
+        validateComment(req.body.text, testUserId);
+
+        const newComment = new CommentsModel({
+            text: req.body.text,
+            userId: testUserId,
+            username: "Elias Fredriksson",
+        });
+        const commentResult = await newComment.save();
+        RecipesModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: { comments: { comment: commentResult._id } },
+            },
+            (error, docs, result) => {
+                if (error)
+                    res.status(500).redirect("/recipes/" + req.params.id);
+                else res.status(200).redirect("/recipes/" + req.params.id);
+            }
+        );
+    } catch (error) {
+        console.log(
+            "\n\n================= ERROR =================\n",
+            error,
+            "\n\n"
+        );
+        res.status(400).send(error);
+    }
+});
+
+recipesRouter.post("/:id/comments/edit", async (req, res) => {
+    try {
+        // ################### TEMPORARY ###################
+        let tempId = mongoose.Types.ObjectId(tempId);
+        // ####
+        validateComment(req.body.text, tempId);
+        CommentsModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                text: req.body.text,
+                userId: new mongoose.Types.ObjectId(tempId),
+                username: "[PLACEHOLDER_USERNAME]",
+            },
+            (error, docs, result) => {
+                if (error)
+                    res.status(500).redirect(`/recipes/${req.params.id}`);
+                else res.status(200).redirect(`/recipes/${req.params.id}`);
+            }
+        );
+    } catch (error) {
+        console.log("\n\nERROR: ", error);
+        res.status(400).redirect("/");
+    }
+});
+
+recipesRouter.post("/:id/comments/remove/:commentId", async (req, res) => {
+    RecipesModel.findByIdAndUpdate(
+        req.params.id,
+        {
+            $pull: {
+                comments: {
+                    comment: new mongoose.Types.ObjectId(req.params.commentId),
+                },
+            },
+        },
+        (error, docs, result) => {
+            if (error) res.status(500).redirect("/recipes/" + req.params.id);
+            else {
+                CommentsModel.findByIdAndDelete(
+                    req.params.commentId,
+                    (error, docs) => {
+                        if (error)
+                            res.status(500).redirect(
+                                `/recipe/${req.params.id}`
+                            );
+                        else
+                            res.status(200).redirect(
+                                "/recipes/" + req.params.id
+                            );
+                    }
+                );
+            }
+        }
+    );
+});
 // ########################################################
 
 module.exports = recipesRouter;

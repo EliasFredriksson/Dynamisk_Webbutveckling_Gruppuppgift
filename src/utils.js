@@ -64,6 +64,13 @@ const validateRecipe = (
     });
 };
 
+const validateComment = (text, userId) => {
+    if (typeof text !== "string" || text.length <= 0)
+        throw "Invalid comment text.";
+    if (!mongoose.Types.ObjectId.isValid(userId))
+        throw "Invalid comment userId.";
+};
+
 const comparePassword = (password, hash) => {
     const correct = bcrypt.compareSync(password, hash);
     return correct;
@@ -102,6 +109,7 @@ function validateUser(user) {
 }
 
 module.exports = {
+    validateComment,
     validateRecipe,
     comparePassword,
     forceAuthorize,

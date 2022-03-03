@@ -17,11 +17,10 @@ const RecipesSchema = new mongoose.Schema({
     comments: [
         {
             _id: false,
-            text: { type: String, required: true },
-            user: {
+            comment: {
                 type: mongoose.Types.ObjectId,
                 required: true,
-                ref: "users",
+                ref: "comments",
             },
         },
     ],
