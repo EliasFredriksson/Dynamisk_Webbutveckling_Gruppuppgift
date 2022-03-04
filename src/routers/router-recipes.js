@@ -7,6 +7,7 @@ const {
     validateComment,
     forceAuthorize,
     forceOwnComment,
+    forceOwnRecipe,
 } = require("../utils");
 const RecipesModel = require("../models/RecipesModel.js");
 const UsersModel = require("../models/UsersModels.js");
@@ -91,9 +92,7 @@ recipesRouter.get("/:id", async (req, res) => {
 });
 // ######################## UPDATE ########################
 // Go to Update (Edit) recipe page.
-// MISSING:
-//      Middleware to check that the recipe is your own.
-recipesRouter.get("/:id/edit", forceAuthorize, (req, res) => {
+recipesRouter.get("/:id/edit", forceAuthorize, forceOwnRecipe, (req, res) => {
     RecipesModel.findById(req.params.id, (error, recipe) => {
         if (error) res.status(500).redirect(`/`);
         if (recipe) res.status(200).redirect("/");
@@ -105,9 +104,7 @@ recipesRouter.get("/:id/edit", forceAuthorize, (req, res) => {
     });
 });
 // Update recipe and save to database.
-// MISSING:
-//      Middleware to check that the recipe is your own.
-recipesRouter.post("/:id/edit", forceAuthorize, (req, res) => {
+recipesRouter.post("/:id/edit", forceAuthorize, forceOwnRecipe, (req, res) => {
     const { name, chefId, description, image, ingredients } = req.body;
     try {
         validateRecipe(name, chefId, description, image, ingredients, []);
@@ -133,17 +130,20 @@ recipesRouter.post("/:id/edit", forceAuthorize, (req, res) => {
 });
 // ######################## DELETE ########################
 // Delete recipe
-recipesRouter.post("/:id/delete", forceAuthorize, async (req, res) => {
-    RecipesModel.findByIdAndDelete(req.params.id, (error, docs) => {
-        if (error) res.status(500).redirect(`/recipe/${req.params.id}`);
-        else res.status(200).redirect("/");
-    });
-});
+recipesRouter.post(
+    "/:id/delete",
+    forceAuthorize,
+    forceOwnRecipe,
+    async (req, res) => {
+        RecipesModel.findByIdAndDelete(req.params.id, (error, docs) => {
+            if (error) res.status(500).redirect(`/recipe/${req.params.id}`);
+            else res.status(200).redirect("/");
+        });
+    }
+);
 
 // ######################## COMMENT ########################
 // Create comment
-// MISSING:
-//      Middleware to check if the comment is your own
 recipesRouter.post("/:id/comments/add", forceAuthorize, async (req, res) => {
     try {
         if (!res.locals.loggedIn) throw "Not logged in.";
@@ -177,8 +177,6 @@ recipesRouter.post("/:id/comments/add", forceAuthorize, async (req, res) => {
 });
 
 // Edit comment
-// MISSING:
-//      Middleware to check if the comment is your own
 recipesRouter.post(
     "/:id/comments/edit/:commentId",
     forceAuthorize,
@@ -205,8 +203,6 @@ recipesRouter.post(
 );
 
 // Delete comment
-// MISSING:
-//      Middleware to check if the comment is your own
 recipesRouter.post(
     "/:id/comments/remove/:commentId",
     forceAuthorize,

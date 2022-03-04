@@ -50,7 +50,7 @@
                     >
                 </div>
             </div>
-            {{#if loggedIn}}
+            {{#if (checkIfIdAreSame recipe.chef id)}}
             <div id="recipe-footer">
                 <form action="#" method="post">
                     <input
@@ -103,7 +103,7 @@
                                 comment.text
                             }}</textarea>
 
-                            {{#if (isOwnComment comment.userId ../id)}}
+                            {{#if (checkIfIdAreSame comment.userId ../id)}}
                             <input
                                 type="button"
                                 value="Redigera"

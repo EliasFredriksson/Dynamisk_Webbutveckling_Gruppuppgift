@@ -8,7 +8,6 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const path = require("path");
 const customMorgan = require("./public/js/models/Custom_Morgan_Token");
-const UsersModel = require("./models/UsersModels.js");
 
 const recipesRouter = require("./routers/router-recipes");
 const usersRouter = require("./routers/router-users");
@@ -23,8 +22,8 @@ app.engine(
         extname: ".hbs",
         defaultLayout: "main",
         helpers: {
-            isOwnComment: (commentUserId, localId) => {
-                return commentUserId == localId;
+            checkIfIdAreSame: (idOne, idTwo) => {
+                return idOne == idTwo;
             },
         },
     })

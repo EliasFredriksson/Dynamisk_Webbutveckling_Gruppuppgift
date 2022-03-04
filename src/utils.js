@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const CommentsModel = require("./models/CommentsModel");
+const RecipesModel = require("./models/RecipesModel");
 
 // Validates information which is to be passed into a new recipe schema.
 const validateRecipe = (
@@ -111,18 +112,10 @@ function validateUser(user) {
 }
 
 const forceOwnComment = async (req, res, next) => {
-    const loggedInUser = res.locals.id;
-    const commentId = req.params.commentId;
-
-    console.log("LKSJDFLSKDFJLDS");
-
     try {
-        const comment = await CommentsModel.findById(commentId);
-
-        console.log(comment);
-
+        const comment = await CommentsModel.findById(req.params.commentId);
         if (comment) {
-            if (comment.userId.toString() === loggedInUser) {
+            if (comment.userId.toString() === res.locals.id) {
                 res.locals.ownComment = true;
             } else {
                 res.locals.ownComment = false;
@@ -136,12 +129,32 @@ const forceOwnComment = async (req, res, next) => {
     }
 };
 
+const forceOwnRecipe = async (req, res, next) => {
+    try {
+        const recipe = await RecipesModel.findById(req.params.id);
+
+        if (recipe) {
+            if (recipe.chef.toString() === res.locals.id) {
+                res.locals.ownRecipe = true;
+            } else {
+                res.locals.ownRecipe = false;
+            }
+        } else {
+            res.locals.ownRecipe = false;
+        }
+        next();
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
+
 module.exports = {
     validateComment,
     validateRecipe,
     comparePassword,
     forceAuthorize,
     forceOwnComment,
+    forceOwnRecipe,
     hashPassword,
     validateUser,
 };
