@@ -14,6 +14,16 @@ const RecipesSchema = new mongoose.Schema({
             category: { type: String, required: true },
         },
     ],
+    comments: [
+        {
+            _id: false,
+            comment: {
+                type: mongoose.Types.ObjectId,
+                required: true,
+                ref: "comments",
+            },
+        },
+    ],
 });
 
 const RecipesModel = mongoose.model("recipes", RecipesSchema);

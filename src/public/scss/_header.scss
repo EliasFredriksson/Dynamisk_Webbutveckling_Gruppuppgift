@@ -60,9 +60,10 @@ header {
                     font-size: 0.8rem;
                     text-decoration: none;
                     color: black;
-                    transition: all 0.5s ease;
+                    transition: 200ms ease;
                     &:hover {
-                        font-weight: bold;
+                        text-shadow: 0px 0px 1px black;
+                        transform: scale(1.05);
                     }
                 }
                 .submit-button {
