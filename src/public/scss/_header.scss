@@ -1,5 +1,17 @@
 header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: rgba(206, 203, 194, 0.3);
+  padding-left: 30px;
+  position: relative;
+  .history-back {
+    height: 35px;
+    width: 35px;
+    border: 1px solid rgb(111, 111, 111);
+    border-radius: 50%;
     display: flex;
+    justify-content: center;
     align-items: center;
     justify-content: space-between;
     background-color: rgba(206, 203, 194, 0.3);
@@ -82,46 +94,48 @@ header {
                 }
             }
         }
+      }
+    }
+  }
+
+  nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 36%;
+
+    a {
+      color: white;
+      text-decoration: none;
+
+      // flex-basis tells how each child should size it
+      // self to the basis value. In this case, each child
+      // should be 25% width of the parent.
+      flex-basis: 25%;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+
+      transition: 200ms ease-in-out;
+      span {
+        transition: 200ms ease-in-out;
+        font-size: 0.9em;
+      }
     }
 
-    nav {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        justify-content: center;
-        height: 100%;
-        width: 36%;
+    a:hover {
+      background-color: rgba($color: #fff, $alpha: 0.4);
+      box-shadow: 0px 0px 10px rgba(119, 119, 119, 0.4);
 
-        a {
-            color: white;
-            text-decoration: none;
-
-            // flex-basis tells how each child should size it
-            // self to the basis value. In this case, each child
-            // should be 25% width of the parent.
-            flex-basis: 25%;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-
-            transition: 200ms ease-in-out;
-            span {
-                transition: 200ms ease-in-out;
-                font-size: 0.9em;
-            }
-        }
-
-        a:hover {
-            background-color: rgba($color: #fff, $alpha: 0.4);
-            box-shadow: 0px 0px 10px rgba(119, 119, 119, 0.4);
-
-            span {
-                transform: scale(1.1) translateY(-3px);
-                text-shadow: 0px 0px 5px #404040;
-            }
-        }
+      span {
+        transform: scale(1.1) translateY(-3px);
+        text-shadow: 0px 0px 5px #404040;
+      }
     }
+  }
 }

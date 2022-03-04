@@ -1,7 +1,77 @@
-<h2>Users single</h2>
+<div class="profile-page-body">
+  {{>header-home}}
+  <h2>{{user.username}}</h2>
 
-<form action="/users/delete" method="post">
-  <input type="submit" value="delete" />
-</form>
+  <div class="container">
 
-<p>{{username}}</p>
+    <div class="profile-upper-container">
+      <div class="profile-container">
+        <div class="image-container">
+          <img src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png" alt="Chef">
+        </div>
+        <h2>{{user.username}}</h2>
+      </div>
+    </div>
+
+    <div class="profile-lower-container">
+
+      <div class="profile-recipes-container">
+        <h3>{{user.username}}s recept</h3>
+        {{#each recipes}}
+        <a href="/recipes/{{_id}}">
+          <div class="recipes-container">
+            <div class="image-container">
+              <img
+                src="https://purewows3.imgix.net/images/articles/2019_01/Homemade_Swedish_Meatballs_Recipe.jpg?auto=format,compress&cs=strip"
+                alt="foood">
+            </div>
+            <div class="recipe-info-container">
+              <div class="recipe-title-container">
+                <h3>{{name}}</h3>
+              </div>
+              <div class="profile-line"></div>
+              <div class="recipe-rating-container">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+        {{/each}}
+      </div>
+
+      <div class="profile-recipes-container">
+        <h3>{{user.username}}s favoriter</h3>
+        {{#each recipes}}
+        <a href="/recipes/{{_id}}">
+          <div class="recipes-container">
+            <div class="image-container">
+              <img
+                src="https://purewows3.imgix.net/images/articles/2019_01/Homemade_Swedish_Meatballs_Recipe.jpg?auto=format,compress&cs=strip"
+                alt="foood">
+            </div>
+            <div class="recipe-info-container">
+              <div class="recipe-title-container">
+                <h3>{{name}}</h3>
+              </div>
+              <div class="profile-line"></div>
+              <div class="recipe-rating-container">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+        {{/each}}
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+</div>
