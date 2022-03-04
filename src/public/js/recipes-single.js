@@ -8,6 +8,9 @@ window.onload = () => {
             const editButton = tag.children[1].children[0].children[1];
             const finishButton = tag.children[1].children[0].children[2];
             const textarea = tag.children[1].children[0].children[0];
+
+            if (!editButton || !finishButton || !textarea) continue;
+
             editButton.addEventListener("click", () => {
                 editButton.style.display = "none";
                 finishButton.style.display = "block";
@@ -27,7 +30,6 @@ window.onload = () => {
 };
 
 function doCommentEditFetch(commentId, newText) {
-    console.log(window.location.href + "/comments/edit/" + commentId);
     fetch(window.location.href + "/comments/edit/" + commentId, {
         method: "POST",
         body: JSON.stringify({
