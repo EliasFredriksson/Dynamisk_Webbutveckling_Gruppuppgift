@@ -17,12 +17,12 @@ const app = express();
 
 // ======= CONFIG =======
 app.engine(
-    // Configure engine.
-    "hbs",
-    expressHandlebars.engine({
-        extname: ".hbs",
-        defaultLayout: "main",
-    })
+  // Configure engine.
+  "hbs",
+  expressHandlebars.engine({
+    extname: ".hbs",
+    defaultLayout: "main",
+  })
 );
 app.use(express.static("./src/public")); // Public folder. Css and  JS access.
 new customMorgan(morgan, app).enable(); // Custom morgan
@@ -38,24 +38,24 @@ app.use("/assets", express.static(path.join(__dirname, "./public")));
 
 // Auth Middleware
 app.use((req, res, next) => {
-    const { token } = req.cookies;
+  const { token } = req.cookies;
 
-    if (token && jwt.verify(token, process.env.JWTSECRET)) {
-        const tokenData = jwt.decode(token, process.env.JWTSECRET);
-        res.locals.loggedIn = true;
-        res.locals.username = tokenData.username;
-        res.locals.id = tokenData._id;
-    } else {
-        res.locals.loggedIn = false;
-    }
-    next();
+  if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    const tokenData = jwt.decode(token, process.env.JWTSECRET);
+    res.locals.loggedIn = true;
+    res.locals.username = tokenData.username;
+    res.locals.id = tokenData._id;
+  } else {
+    res.locals.loggedIn = false;
+  }
+  next();
 });
 
 // Home
 app.get("/", (req, res) => {
-    res.render("home", {
-        title: "Home",
-    });
+  res.render("home", {
+    title: "Home",
+  });
 });
 
 // ======= ROUTERS =======
@@ -64,5 +64,5 @@ app.use("/users", usersRouter);
 
 // ======= LISTEN =======
 app.listen(8000, () => {
-    console.log("http://localhost:8000/");
+  console.log("http://localhost:8000/");
 });

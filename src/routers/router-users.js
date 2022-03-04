@@ -132,9 +132,11 @@ usersRouter.post("/logout", (req, res) => {
 
 //Get id
 usersRouter.get("/:id", async (req, res) => {
-  const user = await UsersModels.findById(req.params.id);
+  const id = req.params.id;
+  const user = await UsersModels.findById(req.params.id).lean();
+  const recipes = await RecipesModel.find({ chef: id }).lean();
 
-  res.render("users-single", user);
+  res.render("users-single", { recipes: recipes, user: user });
 });
 
 module.exports = usersRouter;
