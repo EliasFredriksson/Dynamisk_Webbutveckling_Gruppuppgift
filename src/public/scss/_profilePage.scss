@@ -1,0 +1,97 @@
+.profile-page-body {
+  flex-grow: 1;
+  background-image: url("https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2076&q=80");
+  background-position: center;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  h2 {
+    text-align: center;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .profile-upper-container {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      width: 30%;
+      padding: 30px;
+      box-shadow: 0px 0px 20px rgb(117, 117, 117);
+      .profile-container {
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 500%;
+        padding: 30px;
+        .image-container {
+          width: 60%;
+          img {
+            border-radius: 50%;
+            width: 100%;
+            background-color: gray;
+          }
+        }
+      }
+    }
+    .profile-lower-container {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-evenly;
+      background-color: rgba(255, 255, 255, 0.8);
+      width: 80%;
+      padding: 30px;
+      box-shadow: 0px 0px 20px rgb(117, 117, 117);
+
+      .profile-recipes-container {
+        width: 40%;
+
+        h3 {
+          text-align: center;
+        }
+        .recipes-container {
+          padding: 10px;
+          background-color: white;
+          display: flex;
+          width: 90%;
+          overflow: scroll;
+          .image-container {
+            margin: 10px;
+            width: 30%;
+            img {
+              width: 100%;
+            }
+          }
+          .recipe-info-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 100%;
+            .recipe-title-container {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              h3 {
+                margin: 0;
+              }
+            }
+            .profile-line {
+              width: 80%;
+              border: 1px solid black;
+            }
+            .recipe-rating-container {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

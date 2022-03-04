@@ -1,6 +1,7 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const UsersModels = require("../models/UsersModels.js");
+const RecipesModel = require("../models/RecipesModel.js");
 const utils = require("../utils.js");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
@@ -24,8 +25,13 @@ usersRouter.post("/create", async (req, res) => {
     confirmemail: req.body.confirmemail,
   };
   if (utils.validateUser(validateUser)) {
-    const { username, email, password, confirmPassword, confirmemail } =
-      req.body;
+    const {
+      username,
+      email,
+      password,
+      confirmPassword,
+      confirmemail,
+    } = req.body;
     UsersModels.findOne({ username }, async (err, user) => {
       if (user) {
         res.send(409).redirect("/");
