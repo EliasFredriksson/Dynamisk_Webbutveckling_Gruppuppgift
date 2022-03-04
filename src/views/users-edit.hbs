@@ -1,23 +1,32 @@
+   <div id="user-edit-largest-div">
     {{>header-home}}
 
-<h2>Edit your user info</h2>
+<div id="user-edit-second" >
+<div id="edit-customer-headings">
+<h1>Redigera användaruppgifter</h1>
+</div>
 
-<form action="/users/edit" method="POST">
-  <input type="text" name="username" placeholder="Username" />
-  <br />
-  <input type="password" name="password" placeholder="Password" />
-  <br />
+{{!-- form div  --}}
+<form action="/users/edit" method="POST" id="user-edit-form">
+<div id="input-container">
+<div id="user-edit-input-div-1">
+  <label for="uname">Användarnamn</label>
+  <input type="text" name="username" placeholder="Användarnamn" class="user-edit-input" required/>
+  <label for="pword">Lösenord</label>
+  <input type="password" name="password" placeholder="Lösenord" class="user-edit-input" required/>
+  <label for="pword">Bekräfta lösenord</label>
   <input
     type="password"
     name="confirmPassword"
-    placeholder="Confirm password"
-  />
-  <br />
-
-  <input type="text" name="email" placeholder="Email" />
-  <br />
-  <input type="text" name="confirmemail" placeholder="Confirm email" />
-  <br />
-  <input type="submit" value="Register" />
-
+    placeholder="Bekräfta lösenord" required class="user-edit-input"/>
+</div>
+{{!-- SECOND DIV --}}
+<div id="user-edit-input-div-2">
+  <label for="email">Mejladress</label>
+  <input type="text" name="email" placeholder="Mejladress" class="user-edit-input" required/>
+  <label for="email">Bekräfta mejladress</label>
+  <input type="text" name="confirmemail" placeholder="Bekräfta mejladress" class="user-edit-input" required/>
+  <input type="submit" value="Spara" id="edit-btn-user">
 </form>
+</div>
+</div>

@@ -1,0 +1,56 @@
+#user-edit-largest-div {
+  background-image: url("/assets/pic2.jpeg");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100vh;
+}
+#edit-customer-headings {
+  flex-direction: column;
+}
+#input-container {
+  height: 40%;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  gap: 30px;
+}
+
+#user-edit-input-div-1,
+#user-edit-input-div-2 {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 40%;
+  gap: 4px;
+  .user-edit-input {
+    height: 25px;
+    flex-grow: 1;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-radius: 2px;
+    padding: 5px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+#user-edit-second {
+  height: 50%;
+  width: 50%;
+  margin-left: 25%;
+  border: 1px solid black;
+  border-radius: 2px;
+  background-color: #ececece8;
+  padding: 2%;
+  margin-top: 5%;
+  #edit-btn-user {
+    width: 20%;
+    margin-top: 9%;
+    height: 35px;
+    cursor: pointer;
+  }
+}
