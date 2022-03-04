@@ -3,6 +3,8 @@ const settings = require("./settings");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const CommentsModel = require("./models/CommentsModel");
+
 // Validates information which is to be passed into a new recipe schema.
 const validateRecipe = (
     name,
@@ -108,11 +110,36 @@ function validateUser(user) {
     return valid;
 }
 
+const forceOwnComment = async (req, res, next) => {
+    const loggedInUser = res.locals.id;
+    const commentId = req.params.commentId;
+
+    try {
+        const comment = await CommentsModel.findById(commentId);
+
+        console.log(comment);
+
+        if (comment) {
+            if (comment.userId.toString() === loggedInUser) {
+                res.locals.ownComment = true;
+            } else {
+                res.locals.ownComment = false;
+            }
+        } else {
+            res.locals.ownComment = false;
+        }
+        next();
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
+
 module.exports = {
     validateComment,
     validateRecipe,
     comparePassword,
     forceAuthorize,
+    forceOwnComment,
     hashPassword,
     validateUser,
 };

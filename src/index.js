@@ -62,6 +62,10 @@ app.get("/", (req, res) => {
 app.use("/recipes", recipesRouter);
 app.use("/users", usersRouter);
 
+// ======= 404 ROUTE =======
+app.use("/", (req, res) => {
+    res.sendStatus(404);
+});
 // ======= LISTEN =======
 app.listen(8000, () => {
     console.log("http://localhost:8000/");

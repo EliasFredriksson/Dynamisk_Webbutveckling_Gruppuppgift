@@ -2,7 +2,12 @@ const express = require("express");
 
 const settings = require("../settings");
 
-const { validateRecipe, validateComment, forceAuthorize } = require("../utils");
+const {
+    validateRecipe,
+    validateComment,
+    forceAuthorize,
+    forceOwnComment,
+} = require("../utils");
 const RecipesModel = require("../models/RecipesModel.js");
 const UsersModel = require("../models/UsersModels.js");
 const CommentsModel = require("../models/CommentsModel");
@@ -177,6 +182,7 @@ recipesRouter.post("/:id/comments/add", forceAuthorize, async (req, res) => {
 recipesRouter.post(
     "/:id/comments/edit/:commentId",
     forceAuthorize,
+    forceOwnComment,
     async (req, res) => {
         try {
             validateComment(req.body.text, req.params.commentId);
@@ -203,6 +209,7 @@ recipesRouter.post(
 recipesRouter.post(
     "/:id/comments/remove/:commentId",
     forceAuthorize,
+    forceOwnComment,
     async (req, res) => {
         RecipesModel.findByIdAndUpdate(
             req.params.id,

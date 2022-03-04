@@ -1,8 +1,8 @@
 <header>
-    <div class="history-back" onclick="window.history.back()">
-        <i class="fas fa-arrow-left"></i>
-    </div>
     <div class="logo">
+        <div class="history-back" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </div>
         <a href="/">
             <svg
                 version="1.2"
@@ -34,9 +34,11 @@
     </nav>
 
     <div class="login-container">
-        <form action="/users/login" method="post">
+        <form method="post">
             <div class="input-containers">
                 <div class="single-input-container">
+                    {{#if loggedIn}}
+                    {{else}}
                     <label for="username">Username:</label>
                     <input
                         type="text"
@@ -44,8 +46,12 @@
                         id="username"
                         placeholder="Username"
                     />
+
+                    {{/if}}
                 </div>
                 <div class="single-input-container">
+                    {{#if loggedIn}}
+                    {{else}}
                     <label for="password">Password:</label>
                     <input
                         type="password"
@@ -53,11 +59,28 @@
                         id="password"
                         placeholder="Password"
                     />
+                    {{/if}}
                 </div>
             </div>
             <div class="submit-button-link-container">
                 <a href="/users/create">Register new User</a>
-                <input class="submit-button" type="submit" value="Login" />
+                {{#if loggedIn}}
+                <input
+                    type="submit"
+                    formaction="/users/logout"
+                    formmethod="post"
+                    class="submit-button"
+                    value="Logout"
+                />
+                {{else}}
+                <input
+                    type="submit"
+                    formaction="/users/login"
+                    formmethod="post"
+                    class="submit-button"
+                    value="Login"
+                />
+                {{/if}}
             </div>
         </form>
     </div>

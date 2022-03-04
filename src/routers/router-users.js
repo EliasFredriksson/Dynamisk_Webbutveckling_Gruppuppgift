@@ -89,7 +89,7 @@ usersRouter.post("/edit", utils.forceAuthorize, async (req, res) => {
 });
 
 //Post / Delete
-usersRouter.post("/delete", async (req, res) => {
+usersRouter.post("/delete", utils.forceAuthorize, async (req, res) => {
     const id = res.locals.id;
     UsersModels.findOneAndDelete({ _id: id }, (err) => {
         res.clearCookie("token");
@@ -119,8 +119,8 @@ usersRouter.post("/login", async (req, res) => {
 });
 
 // Logout
-usersRouter.post("/logout", (req, res) => {
-    res.cookie("token", "", { maxAge: 0 });
+usersRouter.post("/logout", utils.forceAuthorize, (req, res) => {
+    res.clearCookie("token");
     res.redirect("/");
 });
 
