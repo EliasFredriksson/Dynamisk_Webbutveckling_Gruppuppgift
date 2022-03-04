@@ -22,6 +22,11 @@ app.engine(
     expressHandlebars.engine({
         extname: ".hbs",
         defaultLayout: "main",
+        helpers: {
+            isOwnComment: (commentUserId, localId) => {
+                return commentUserId == localId;
+            },
+        },
     })
 );
 app.use(express.static("./src/public")); // Public folder. Css and  JS access.

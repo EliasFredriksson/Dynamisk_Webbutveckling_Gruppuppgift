@@ -43,6 +43,7 @@ header {
 
             .input-containers {
                 display: flex;
+                justify-content: flex-end;
                 gap: 20px;
                 .single-input-container {
                     min-width: 0;

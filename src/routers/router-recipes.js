@@ -185,6 +185,7 @@ recipesRouter.post(
     forceOwnComment,
     async (req, res) => {
         try {
+            if (!res.locals.ownComment) throw "Not own comment.";
             validateComment(req.body.text, req.params.commentId);
             CommentsModel.findByIdAndUpdate(
                 req.params.commentId,

@@ -103,8 +103,7 @@
                                 comment.text
                             }}</textarea>
 
-                            {{!-- THIS VALUE SHOULD BE SET BY A MIDDLEWARE THATS CURRENTLY MISSING --}}
-                            {{!-- {{#if ownComment}} --}}
+                            {{#if (isOwnComment comment.userId ../id)}}
                             <input
                                 type="button"
                                 value="Redigera"
@@ -125,7 +124,7 @@
                                     comment._id
                                 }}"
                             />
-                            {{!-- {{/if}} --}}
+                            {{/if}}
                         </form>
                     </div>
                 </div>

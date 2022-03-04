@@ -114,6 +114,8 @@ const forceOwnComment = async (req, res, next) => {
     const loggedInUser = res.locals.id;
     const commentId = req.params.commentId;
 
+    console.log("LKSJDFLSKDFJLDS");
+
     try {
         const comment = await CommentsModel.findById(commentId);
 

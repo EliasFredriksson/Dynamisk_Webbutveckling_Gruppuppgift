@@ -51,6 +51,9 @@
                 </div>
                 <div class="single-input-container">
                     {{#if loggedIn}}
+                    <p>
+                        <b>Logged in as: {{ username }}</b>
+                    </p>
                     {{else}}
                     <label for="password">Password:</label>
                     <input
