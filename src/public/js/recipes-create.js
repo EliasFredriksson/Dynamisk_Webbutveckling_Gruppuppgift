@@ -8,7 +8,6 @@ window.onload = () => {
             addIngredient();
         }
     });
-
     document.getElementById("submit-recipe").addEventListener("click", (e) => {
         e.preventDefault();
         let recipeForm = document.getElementById("submit-recipe-form");
@@ -17,13 +16,25 @@ window.onload = () => {
             if (currentIngredients.length == 0) {
                 triggerIngredientAlert();
             } else {
-                AddRecipe();
+                addRecipe();
             }
         }
     });
-
+    getEditIngredients();
     renderIngredients();
 };
+
+function getEditIngredients() {
+    const dataTag = document.getElementById("recipe-data");
+    if (!dataTag) return;
+    const data = dataTag.getAttribute("data-ingredients");
+    if (data) {
+        const ingredients = JSON.parse(data);
+        ingredients.forEach((entry) => {
+            currentIngredients.push(entry);
+        });
+    }
+}
 
 function addIngredient() {
     let name = document.getElementById("ingredient").value;
@@ -42,8 +53,6 @@ function addIngredient() {
 }
 
 function renderIngredients() {
-    console.log(currentIngredients);
-
     let currentIngredientsContainer = document.getElementById(
         "current-ingredients"
     );
@@ -99,7 +108,7 @@ function triggerIngredientAlert() {
     }, 1500);
 }
 
-function AddRecipe() {
+function addRecipe() {
     fetch(window.location.href, {
         method: "POST",
         body: JSON.stringify({
@@ -113,7 +122,6 @@ function AddRecipe() {
     })
         .then((response) => response.json())
         .then((newRecipeId) => {
-            console.log("DATA: ", newRecipeId);
             window.location.href = `${window.location.origin}/recipes/${newRecipeId}`;
         })
         .catch((error) => {
