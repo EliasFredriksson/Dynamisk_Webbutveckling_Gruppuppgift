@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("./mongoose.js");
+require("./passport.js");
 
 const express = require("express");
 const expressHandlebars = require("express-handlebars");

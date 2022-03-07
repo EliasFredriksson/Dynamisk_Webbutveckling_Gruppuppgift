@@ -6,6 +6,7 @@ const utils = require("../utils.js");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { validate } = require("../models/UsersModels.js");
+const passport = require("passport");
 
 const usersRouter = express.Router();
 
@@ -123,6 +124,43 @@ usersRouter.post("/login", async (req, res) => {
     }
   });
 });
+
+//Login with google
+usersRouter.get(
+  "/login/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+usersRouter.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/create" }),
+  async (req, res) => {
+    const googleId = req.user.id;
+
+    UsersModels.findOne({ googleId }, async (err, user) => {
+      const userData = { username: req.user.displayName };
+
+      if (user) {
+        userData.id = user._id;
+      } else {
+        const newUser = new UsersModels({
+          googleId,
+          username: req.user.displayName,
+          email: req.user.emails[0].value,
+          image: req.user.photos[0].value,
+        });
+        console.log(newUser);
+        const result = await newUser.save();
+        userData._id = result._id;
+      }
+
+      const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+
+      res.cookie("token", accessToken);
+      res.redirect("/");
+    });
+  }
+);
 
 // Logout
 usersRouter.post("/logout", utils.forceAuthorize, (req, res) => {
