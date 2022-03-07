@@ -17,3 +17,44 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+#js-data {
+    display: none;
+}
+
+#transition-animation {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+    pointer-events: none;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+.fade-in {
+    animation: fade-in 200ms ease;
+    opacity: 1;
+}
+
+.fade-out {
+    animation: fade-out 200ms ease;
+    opacity: 0;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

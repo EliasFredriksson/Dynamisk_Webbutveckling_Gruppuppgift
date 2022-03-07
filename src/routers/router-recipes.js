@@ -101,6 +101,7 @@ recipesRouter.get("/:id/edit", forceAuthorize, forceOwnRecipe, (req, res) => {
                     title: "Edit Recipe",
                     recipe: recipe,
                     strigifiedIngredients: JSON.stringify(recipe.ingredients),
+                    jsFiles: JSON.stringify(["/js/recipes-create.js"]),
                 });
             } else {
                 res.status(400).redirect(`/`);
