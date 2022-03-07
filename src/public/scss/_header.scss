@@ -1,127 +1,175 @@
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgba(206, 203, 194, 0.3);
-  padding-left: 30px;
-  position: relative;
-  .logo {
-    .history-back {
-      height: 35px;
-      width: 35px;
-      border: 1px solid rgb(111, 111, 111);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #c4c4c4;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: #555555;
-        color: white;
-      }
-      .fas {
-        font-size: 1.3rem;
-      }
-    }
     display: flex;
     align-items: center;
-    gap: 30px;
-  }
+    justify-content: space-between;
+    background-color: rgba(206, 203, 194, 0.3);
+    padding-left: 30px;
+    position: relative;
+    .logo {
+        .history-back {
+            height: 35px;
+            width: 35px;
+            border: 1px solid rgb(111, 111, 111);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #c4c4c4;
+            cursor: pointer;
+            transition: all 0.3s ease;
 
-  .login-container {
-    padding: 20px;
-    width: 30%;
-
-    form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
-
-      .input-containers {
-        display: flex;
-        justify-content: flex-end;
-        gap: 20px;
-        .single-input-container {
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-          label {
-            font-size: 0.8rem;
-          }
-          input {
-            padding: 5px;
-          }
-          input:focus {
-            outline: none;
-          }
+            &:hover {
+                background-color: #555555;
+                color: white;
+            }
+            .fas {
+                font-size: 1.3rem;
+            }
         }
-      }
-      .submit-button-link-container {
         display: flex;
-        justify-content: flex-end;
-        gap: 20px;
         align-items: center;
+        gap: 30px;
+    }
 
+    .login-container {
+        padding: 20px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+
+            .input-containers {
+                display: flex;
+                justify-content: flex-end;
+                gap: 20px;
+                .single-input-container {
+                    min-width: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    #logged-in-user {
+                        display: flex;
+                        align-items: center;
+                        gap: 20px;
+                        text-decoration: none;
+                        color: black;
+                        .img-wrapper {
+                            width: 60px;
+                            display: flex;
+                            align-items: center;
+                            img {
+                                width: 100%;
+                                background-color: rgba(255, 255, 255, 0.605);
+                                border-radius: 50%;
+                                transition: 200ms ease;
+                            }
+                        }
+
+                        &:hover {
+                            .img-wrapper {
+                                img {
+                                    background-color: white;
+                                }
+                            }
+                        }
+                    }
+
+                    label {
+                        font-size: 0.8rem;
+                    }
+                    input {
+                        padding: 5px;
+                    }
+                    input:focus {
+                        outline: none;
+                    }
+                }
+            }
+            .submit-button-link-container {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+                align-items: center;
+
+                a {
+                    font-size: 0.8rem;
+                    text-decoration: none;
+                    color: black;
+                    transition: 200ms ease;
+
+                    &:hover {
+                        text-shadow: 0px 0px 1px black;
+                        transform: scale(1.05);
+                    }
+                }
+                .submit-button {
+                    cursor: pointer;
+                    font-size: 0.9em;
+                    padding: 8px;
+                    border: none;
+                    border-radius: 3px;
+                    transition: 200ms ease-in-out;
+                    &:hover {
+                        color: white;
+                        background-color: rgb(61, 61, 61);
+                    }
+                }
+            }
+        }
+    }
+
+    nav {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 36%;
         a {
-          font-size: 0.8rem;
-          text-decoration: none;
-          color: black;
-          transition: 200ms ease;
-          &:hover {
-            text-shadow: 0px 0px 1px black;
-            transform: scale(1.05);
-          }
+            color: white;
+            text-decoration: none;
+            // flex-basis tells how each child should size it
+            // self to the basis value. In this case, each child
+            // should be 25% width of the parent.
+            flex-basis: 25%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            transition: 200ms ease-in-out;
+            span {
+                transition: 200ms ease-in-out;
+                font-size: 0.9em;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+            }
+            .nav-underline {
+                background-color: white;
+                height: 0px;
+                width: 0;
+                transition: 200ms ease;
+            }
         }
-        .submit-button {
-          cursor: pointer;
+
+        a:hover {
+            background-color: rgba($color: #fff, $alpha: 0.4);
+            box-shadow: 0px 0px 10px rgba(119, 119, 119, 0.4);
+            span {
+                transform: scale(1.1) translateY(-3px);
+                text-shadow: 0px 0px 5px #404040;
+            }
+            .nav-underline {
+                height: 2px;
+                width: 100%;
+                transform: translateY(-3px);
+                box-shadow: 0 0 10px black;
+            }
         }
-      }
     }
-  }
-
-  nav {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 36%;
-
-    a {
-      color: white;
-      text-decoration: none;
-
-      // flex-basis tells how each child should size it
-      // self to the basis value. In this case, each child
-      // should be 25% width of the parent.
-      flex-basis: 25%;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
-
-      transition: 200ms ease-in-out;
-      span {
-        transition: 200ms ease-in-out;
-        font-size: 0.9em;
-      }
-    }
-
-    a:hover {
-      background-color: rgba($color: #fff, $alpha: 0.4);
-      box-shadow: 0px 0px 10px rgba(119, 119, 119, 0.4);
-
-      span {
-        transform: scale(1.1) translateY(-3px);
-        text-shadow: 0px 0px 5px #404040;
-      }
-    }
-  }
 }
