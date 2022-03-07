@@ -52,15 +52,17 @@
             </div>
             {{#if (checkIfIdAreSame recipe.chef id)}}
             <div id="recipe-footer">
-                <form action="#" method="post">
+                <form action="#">
                     <input
                         type="submit"
                         value="Redigera"
+                        formmethod="get"
                         formaction="/recipes/{{ recipe._id }}/edit"
                     />
                     <input
                         type="submit"
                         value="Ta bort"
+                        formmethod="post"
                         formaction="/recipes/{{ recipe._id }}/delete"
                     />
                 </form>

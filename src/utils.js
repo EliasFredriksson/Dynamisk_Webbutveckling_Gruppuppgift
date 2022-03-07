@@ -117,13 +117,15 @@ const forceOwnComment = async (req, res, next) => {
         if (comment) {
             if (comment.userId.toString() === res.locals.id) {
                 res.locals.ownComment = true;
+                next();
             } else {
                 res.locals.ownComment = false;
+                res.sendStatus(401);
             }
         } else {
             res.locals.ownComment = false;
+            res.sendStatus(401);
         }
-        next();
     } catch (error) {
         res.sendStatus(500);
     }
@@ -132,17 +134,18 @@ const forceOwnComment = async (req, res, next) => {
 const forceOwnRecipe = async (req, res, next) => {
     try {
         const recipe = await RecipesModel.findById(req.params.id);
-
         if (recipe) {
             if (recipe.chef.toString() === res.locals.id) {
                 res.locals.ownRecipe = true;
+                next();
             } else {
                 res.locals.ownRecipe = false;
+                res.sendStatus(401);
             }
         } else {
             res.locals.ownRecipe = false;
+            res.sendStatus(401);
         }
-        next();
     } catch (error) {
         res.sendStatus(500);
     }

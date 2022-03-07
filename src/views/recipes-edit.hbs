@@ -1,0 +1,98 @@
+<head>
+    <script src="/js/recipes-create.js"></script>
+</head>
+
+<div id="create-recipe-body">
+    <div id="recipe-data" data-ingredients="{{ strigifiedIngredients }}"></div>
+    {{>header-home}}
+    <main>
+        <div id="wrapper">
+            <span id="title">Redigera {{ recipe.name }}</span>
+            <div id="new-recipe-form">
+                <div id="input-fields">
+                    <div id="form-left">
+                        <form
+                            action="create"
+                            method="post"
+                            id="submit-recipe-form"
+                        >
+                            <label for="recipe-name">Recept namn</label>
+                            <input
+                                type="text"
+                                placeholder="Recept namn"
+                                required
+                                id="recipe-name"
+                                value="{{ recipe.name }}"
+                            />
+                            <label for="recipe-description">Beskrivning</label>
+                            <textarea
+                                id="recipe-description"
+                                placeholder="Beskrivning"
+                                required
+                                >{{ recipe.description }}</textarea
+                            >
+                            <input
+                                type="submit"
+                                id="submit-recipe"
+                                value="Redigera"
+                            />
+                        </form>
+                    </div>
+                    <div id="form-right">
+                        <form id="add-ingredient-form">
+                            <div id="ingredient-wrapper">
+                                <label for="ingredient">Ingrediens</label>
+                                <input
+                                    id="ingredient"
+                                    type="text"
+                                    placeholder="Namn"
+                                    required
+                                />
+                            </div>
+                            <div id="amount-wrapper">
+                                <label for="amount">Antal</label>
+                                <input
+                                    id="amount"
+                                    type="number"
+                                    step="0.1"
+                                    placeholder="1"
+                                    min="0.1"
+                                    required
+                                />
+                            </div>
+                            <div id="unit-wrapper">
+                                <label for="unit">Enhet</label>
+                                <select id="unit" required>
+                                    <option value="" hidden selected>--</option>
+                                    {{#each ingredientUnits}}
+                                    <option value="{{ this }}">
+                                        {{ this }}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div id="category-wrapper">
+                                <label for="category">Kategori</label>
+                                <select id="category" required>
+                                    <option value="" hidden selected>--</option>
+                                    {{#each ingredientCategories}}
+                                    <option value="{{ this }}">
+                                        {{ this }}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <button type="button" id="add-ingredient">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                        <div class="hr"></div>
+
+                        <div id="current-ingredients"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {{>footer-home }}
+</div>
