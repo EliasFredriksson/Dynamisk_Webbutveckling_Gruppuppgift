@@ -1,98 +1,84 @@
 header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   background-color: rgba(206, 203, 194, 0.3);
   padding-left: 30px;
   position: relative;
-  .history-back {
-    height: 35px;
-    width: 35px;
-    border: 1px solid rgb(111, 111, 111);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgba(206, 203, 194, 0.3);
-    padding-left: 30px;
-    position: relative;
-    .logo {
-        .history-back {
-            height: 35px;
-            width: 35px;
-            border: 1px solid rgb(111, 111, 111);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #c4c4c4;
-            cursor: pointer;
-            transition: all 0.3s ease;
+  .logo {
+    .history-back {
+      height: 35px;
+      width: 35px;
+      border: 1px solid rgb(111, 111, 111);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #c4c4c4;
+      cursor: pointer;
+      transition: all 0.3s ease;
 
-            &:hover {
-                background-color: #555555;
-                color: white;
-            }
-            .fas {
-                font-size: 1.3rem;
-            }
-        }
-        display: flex;
-        align-items: center;
-        gap: 30px;
+      &:hover {
+        background-color: #555555;
+        color: white;
+      }
+      .fas {
+        font-size: 1.3rem;
+      }
     }
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
 
-    .login-container {
-        padding: 20px;
-        width: 30%;
+  .login-container {
+    padding: 20px;
+    width: 30%;
 
-        form {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 10px;
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
 
-            .input-containers {
-                display: flex;
-                justify-content: flex-end;
-                gap: 20px;
-                .single-input-container {
-                    min-width: 0;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5px;
-                    label {
-                        font-size: 0.8rem;
-                    }
-                    input {
-                        padding: 5px;
-                    }
-                    input:focus {
-                        outline: none;
-                    }
-                }
-            }
-            .submit-button-link-container {
-                display: flex;
-                justify-content: flex-end;
-                gap: 20px;
-                align-items: center;
+      .input-containers {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+        .single-input-container {
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          label {
+            font-size: 0.8rem;
+          }
+          input {
+            padding: 5px;
+          }
+          input:focus {
+            outline: none;
+          }
+        }
+      }
+      .submit-button-link-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+        align-items: center;
 
-                a {
-                    font-size: 0.8rem;
-                    text-decoration: none;
-                    color: black;
-                    transition: 200ms ease;
-                    &:hover {
-                        text-shadow: 0px 0px 1px black;
-                        transform: scale(1.05);
-                    }
-                }
-                .submit-button {
-                    cursor: pointer;
-                }
-            }
+        a {
+          font-size: 0.8rem;
+          text-decoration: none;
+          color: black;
+          transition: 200ms ease;
+          &:hover {
+            text-shadow: 0px 0px 1px black;
+            transform: scale(1.05);
+          }
+        }
+        .submit-button {
+          cursor: pointer;
         }
       }
     }
