@@ -1,12 +1,9 @@
 window.onload = () => {
     const rawData = document.getElementById("js-data").getAttribute("data-js");
-
     if (rawData) {
         const jsData = JSON.parse(rawData);
         loadScripts(jsData);
     }
-
-    initializeTransition();
 };
 
 function loadScripts(urls) {
@@ -19,5 +16,3 @@ function loadScripts(urls) {
         head.appendChild(script);
     });
 }
-
-function initializeTransition() {}
