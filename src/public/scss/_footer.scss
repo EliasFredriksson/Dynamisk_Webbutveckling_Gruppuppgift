@@ -4,6 +4,17 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    & > span {
+        color: white;
+        text-shadow: 0 0 10px black;
+        padding-top: 10px;
+    }
+    .underline {
+        height: 2px;
+        width: 10%;
+        background-color: white;
+        box-shadow: 0 0 10px black;
+    }
     #authors {
         display: flex;
         align-items: center;

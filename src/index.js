@@ -11,6 +11,8 @@ const customMorgan = require("./public/js/models/Custom_Morgan_Token");
 
 const recipesRouter = require("./routers/router-recipes");
 const usersRouter = require("./routers/router-users");
+const RecipesModel = require("./models/RecipesModel.js");
+const UsersModels = require("./models/UsersModels.js");
 
 const app = express();
 
