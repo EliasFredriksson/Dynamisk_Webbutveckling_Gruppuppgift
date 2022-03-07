@@ -1,6 +1,6 @@
 let currentIngredients = [];
 
-window.onload = () => {
+if (document.readyState === "complete") {
     document.getElementById("add-ingredient").addEventListener("click", () => {
         let ingredientForm = document.getElementById("add-ingredient-form");
         ingredientForm.reportValidity();
@@ -22,7 +22,7 @@ window.onload = () => {
     });
     getEditIngredients();
     renderIngredients();
-};
+}
 
 function getEditIngredients() {
     const dataTag = document.getElementById("recipe-data");

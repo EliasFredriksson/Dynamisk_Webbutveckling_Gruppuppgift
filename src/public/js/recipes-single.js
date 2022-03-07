@@ -1,4 +1,4 @@
-window.onload = () => {
+if (document.readyState === "complete") {
     let comments = document.getElementsByClassName("comment");
 
     if (document.cookie.indexOf("token") != -1) {
@@ -27,7 +27,7 @@ window.onload = () => {
             });
         }
     }
-};
+}
 
 function doCommentEditFetch(commentId, newText) {
     fetch(window.location.href + "/comments/edit/" + commentId, {

@@ -25,6 +25,7 @@ recipesRouter.get("/create", forceAuthorize, (req, res) => {
         title: "Create Recipe",
         ingredientUnits: settings.INGREDIENT_UNITS,
         ingredientCategories: settings.INGREDIENT_CATEGORIES,
+        jsFiles: JSON.stringify(["/js/recipes-create.js"]),
     });
 });
 
@@ -84,6 +85,7 @@ recipesRouter.get("/:id", async (req, res) => {
             recipe: recipe,
             chef: chef,
             categories: recipeCategories,
+            jsFiles: JSON.stringify(["/js/recipes-single.js"]),
         });
     } catch (error) {
         console.log("\n\nERROR:", error);
