@@ -15,30 +15,18 @@
     </div>
 
     <nav>
-        <a href="/"
-            ><span
-                >Hem
-                <div class="nav-underline"></div
-            ></span>
+        <a href="/"><span>Hem
+                <div class="nav-underline"></div></span>
         </a>
-        <a href="/search"
-            ><span
-                >Utforska
-                <div class="nav-underline"></div
-            ></span>
+        <a href="/search"><span>Utforska
+                <div class="nav-underline"></div></span>
         </a>
         {{#if loggedIn}}
-        <a href="/recipes/create"
-            ><span
-                >Nytt Recept
-                <div class="nav-underline"></div
-            ></span>
+        <a href="/recipes/create"><span>Nytt Recept
+                <div class="nav-underline"></div></span>
         </a>
-        <a href="/users/{{ id }}"
-            ><span
-                >Profil
-                <div class="nav-underline"></div
-            ></span>
+        <a href="/users/{{ id }}"><span>Profil
+                <div class="nav-underline"></div></span>
         </a>
         {{/if}}
     </nav>
@@ -61,10 +49,7 @@
                             <b>{{ username }}</b>
                         </p>
                         <div class="img-wrapper">
-                            <img
-                                src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png"
-                                alt="{{ username }}"
-                            />
+                            <img src="{{profileImage}}" alt="{{ username }}" />
                         </div>
                     </a>
 

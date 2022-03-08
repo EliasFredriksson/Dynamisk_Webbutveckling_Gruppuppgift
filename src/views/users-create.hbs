@@ -11,7 +11,7 @@
       {{!-- INPUT DIV STARTS HERE --}}
       <div class="create-user-input-container">
         <div class="user-create-inputfield-large-container">
-          <form action="/users/create" method="POST">
+          <form action="/users/create" method="POST" enctype="multipart/form-data">
             <div class="user-create-label-input">
               <label for="uname">Användarnamn</label>
               <input type="text" name="username" placeholder="Användarnamn" required class="create-user-input" />
@@ -37,6 +37,10 @@
             <label for="email">Bekräfta mejladress</label>
             <input type="text" name="confirmemail" placeholder="Bekräfta mejladress" required
               class="create-user-input" />
+          </div>
+          <div class="user-create-label-input">
+            <label for="image">Profilbild</label>
+            <input type="file" name="image" id="image">
           </div>
           <input type="submit" value="Registrera" class="user-create-btn" />
         </div>
