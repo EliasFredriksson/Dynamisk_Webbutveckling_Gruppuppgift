@@ -1,0 +1,65 @@
+#search-body {
+  background-image: url("/assets/first.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+#search-container {
+  //   border: green 3px solid;
+  //   border: 1px black solid;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 60%;
+  height: auto;
+  margin-left: 20%;
+  background-color: #ecececd5;
+  flex-grow: 1;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+
+  #search-recipe-container {
+    border-radius: 2px;
+    padding: 20px;
+    margin: 5px;
+    width: auto;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1%;
+    box-shadow: grey 1px 1px 1px 1px;
+  }
+}
+#recipe-search-name {
+  display: flex;
+  flex-direction: column;
+}
+
+#recipes-search {
+  border: 1px solid red;
+  box-sizing: border-box;
+}
+.serach-Atag {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  font-size: large;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  transition: 150ms ease-in-out;
+}
+.serach-Atag:hover {
+  color: rgb(129, 129, 129);
+  transform: scale(1.1) translateY(-0.2px);
+  text-shadow: #404040;
+}
+
+#search-recipe-h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -11,6 +11,9 @@ const customMorgan = require("./public/js/models/Custom_Morgan_Token");
 
 const recipesRouter = require("./routers/router-recipes");
 const usersRouter = require("./routers/router-users");
+const UsersModels = require("./models/UsersModels.js");
+const RecipesModel = require("./models/RecipesModel.js");
+const { send } = require("process");
 
 const app = express();
 
@@ -66,10 +69,41 @@ app.get("/", (req, res) => {
 app.use("/recipes", recipesRouter);
 app.use("/users", usersRouter);
 
-// ======= 404 ROUTE =======
+//Search Recipes
+app.get("/search", async (req, res) => {
+  const recipes = await RecipesModel.find().populate("chef").lean();
+  const users = await UsersModels.find().lean();
+
+  const searchTerm = req.query.search;
+  let foundRecipes = [];
+  let foundUsers = [];
+
+  if (!searchTerm || searchTerm.length <= 0) {
+    foundRecipes = recipes;
+    foundUsers = users;
+  } else {
+    for (let i = 0; i < recipes.length; i++) {
+      const recipe = recipes[i];
+
+      if (recipe.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        foundRecipes.push(recipe);
+      }
+    }
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+      if (user.username.toLowerCase().includes(searchTerm.toLowerCase())) {
+        foundUsers.push(user);
+      }
+    }
+  }
+
+  res.render("search", { foundRecipes: foundRecipes, foundUsers: foundUsers });
+});
+
 app.use("/", (req, res) => {
   res.sendStatus(404);
 });
+// ======= 404 ROUTE =======
 // ======= LISTEN =======
 app.listen(8000, () => {
   console.log("http://localhost:8000/");
