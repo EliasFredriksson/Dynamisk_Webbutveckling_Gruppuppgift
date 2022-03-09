@@ -53,8 +53,8 @@
 
       <div class="profile-recipes-container">
         <h3>{{user.username}}s favoriter</h3>
-        {{#each recipes}}
-        <a href="/recipes/{{_id}}">
+        {{#each user.favorites}}
+        <a href="/recipes/{{recipe._id}}">
           <div class="recipes-container">
             <div class="image-container">
               <img
@@ -63,7 +63,7 @@
             </div>
             <div class="recipe-info-container">
               <div class="recipe-title-container">
-                <h3>{{name}}</h3>
+                <h3>{{recipe.name}}</h3>
               </div>
               <div class="profile-line"></div>
               <div class="recipe-rating-container">

@@ -53,6 +53,7 @@ usersRouter.post("/create", async (req, res) => {
                             email: email,
                             recipes: [],
                             image: "/uploads/" + filename,
+                            favorites: [],
                         });
 
                         await newUser.save();
@@ -64,6 +65,7 @@ usersRouter.post("/create", async (req, res) => {
                         hashedPassword: utils.hashPassword(password),
                         email: email,
                         recipes: [],
+                        favorites: [],
                     });
 
                     await newUser.save();
@@ -192,7 +194,9 @@ usersRouter.post("/logout", utils.forceAuthorize, (req, res) => {
 //Get id
 usersRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
-    const user = await UsersModels.findById(req.params.id).lean();
+    const user = await UsersModels.findById(req.params.id)
+        .populate("favorites.recipe")
+        .lean();
     const recipes = await RecipesModel.find({ chef: id }).lean();
 
     res.render("users-single", { recipes: recipes, user: user });
