@@ -4,7 +4,29 @@
         <div id="wrapper">
             <div id="recipe-header">
                 <span id="title">{{ recipe.name }}</span>
-                <span id="rating">[rating placeholder]</span>
+                {{#if loggedIn}}
+                <form method="post">
+                    {{#if (checkIfInFavorites recipe._id loggedInFavorites)}}
+                    <input
+                        class="favorite-button"
+                        type="submit"
+                        value="Ta bort från favoriter"
+                        formaction="/users/{{ id }}/favorites/remove/{{
+                            recipe._id
+                        }}"
+                    />
+                    {{else}}
+                    <input
+                        class="favorite-button"
+                        type="submit"
+                        value="Lägg till i favoriter"
+                        formaction="/users/{{ id }}/favorites/add/{{
+                            recipe._id
+                        }}"
+                    />
+                    {{/if}}
+                </form>
+                {{/if}}
             </div>
             <div id="recipe-body">
                 <div id="left">
@@ -37,22 +59,37 @@
                     <a href="{{#if chef}}/users/{{ chef._id }}{{else}}/{{/if}}">
                         <div id="chef-img-wrapper">
                             {{#if chef.image}}
-                            <img src="{{chef.image}}" alt="{{chef.username}}">
+                            <img
+                                src="{{ chef.image }}"
+                                alt="{{ chef.username }}"
+                            />
                             {{else}}
-                            <img src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png" />
+                            <img
+                                src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png"
+                            />
                             {{/if}}
                         </div>
                     </a>
-                    <span id="chef-name">{{#if chef}}{{ chef.username }}{{else}} Missing User{{/if}}</span>
+                    <span id="chef-name"
+                        >{{#if chef}}{{ chef.username }}{{else}} Missing User{{/if}}</span
+                    >
                 </div>
             </div>
             {{#if (checkIfIdAreSame recipe.chef id)}}
             <div id="recipe-footer">
                 <form action="#">
-                    <input type="submit" value="Redigera" formmethod="get"
-                        formaction="/recipes/{{ recipe._id }}/edit" />
-                    <input type="submit" value="Ta bort" formmethod="post"
-                        formaction="/recipes/{{ recipe._id }}/delete" />
+                    <input
+                        type="submit"
+                        value="Redigera"
+                        formmethod="get"
+                        formaction="/recipes/{{ recipe._id }}/edit"
+                    />
+                    <input
+                        type="submit"
+                        value="Ta bort"
+                        formmethod="post"
+                        formaction="/recipes/{{ recipe._id }}/delete"
+                    />
                 </form>
             </div>
             {{/if}}
@@ -61,7 +98,11 @@
             {{#if loggedIn}}
             <div id="new-comment-wrapper">
                 <span>Kommentera</span>
-                <form action="/recipes/{{ recipe._id }}/comments/add" id="new-comment-form" method="post">
+                <form
+                    action="/recipes/{{ recipe._id }}/comments/add"
+                    id="new-comment-form"
+                    method="post"
+                >
                     <textarea name="text" id="new-comment-text"></textarea>
                     <input type="submit" value="Lägg till" />
                 </form>
@@ -76,12 +117,19 @@
                     <div class="comment-user-info">
                         <div class="img-wrapper">
                             {{#if comment.profileImage}}
-                            <img src="{{comment.profileImage}}" alt="{{comment.username}}">
+                            <img
+                                src="{{ comment.profileImage }}"
+                                alt="{{ comment.username }}"
+                            />
                             {{else}}
-                            <img src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png" />
+                            <img
+                                src="https://cdn1.iconfinder.com/data/icons/people-job/100/Job-plus-35-512.png"
+                            />
                             {{/if}}
                         </div>
-                        <a href="/users/{{ comment.userId }}"><span>{{ comment.username }}</span></a>
+                        <a href="/users/{{ comment.userId }}"
+                            ><span>{{ comment.username }}</span></a
+                        >
                     </div>
                     <div class="comment-text-wrapper">
                         <form method="post">
@@ -90,14 +138,26 @@
                             }}</textarea>
 
                             {{#if (checkIfIdAreSame comment.userId ../id)}}
-                            <input type="button" value="Redigera" data-commentId="{{ comment._id }}"
-                                class="enter-edit" />
+                            <input
+                                type="button"
+                                value="Redigera"
+                                data-commentId="{{ comment._id }}"
+                                class="enter-edit"
+                            />
 
-                            <input type="button" value="Klar" class="finish-edit" />
+                            <input
+                                type="button"
+                                value="Klar"
+                                class="finish-edit"
+                            />
 
-                            <input type="submit" value="Ta bort" formaction="/recipes/{{ ../recipe._id }}/comments/remove/{{
+                            <input
+                                type="submit"
+                                value="Ta bort"
+                                formaction="/recipes/{{ ../recipe._id }}/comments/remove/{{
                                     comment._id
-                                }}" />
+                                }}"
+                            />
                             {{/if}}
                         </form>
                     </div>

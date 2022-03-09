@@ -9,9 +9,12 @@ const userSchema = new mongoose.Schema({
     googleId: { type: String },
     favorites: [
         {
-            type: mongoose.Types.ObjectId,
-            required: true,
-            ref: "recipes",
+            _id: false,
+            recipe: {
+                type: mongoose.Types.ObjectId,
+                required: true,
+                ref: "recipes",
+            },
         },
     ],
 });

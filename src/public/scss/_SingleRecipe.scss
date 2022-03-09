@@ -52,6 +52,25 @@
                 #rating {
                     font-size: 1em;
                 }
+                form {
+                    width: 16%;
+                    .favorite-button {
+                        width: 100%;
+                        font-size: 0.8em;
+                        padding: 10px;
+                        border: none;
+                        border-radius: 2px;
+                        background-color: rgb(238, 224, 214);
+                        transition: 200ms ease;
+
+                        &:hover {
+                            cursor: pointer;
+                            transform: scale(1.1);
+                            background-color: rgb(93, 86, 79);
+                            color: white;
+                        }
+                    }
+                }
             }
             #recipe-body {
                 flex-grow: 1;

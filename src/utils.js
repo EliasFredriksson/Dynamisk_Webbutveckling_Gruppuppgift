@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const CommentsModel = require("./models/CommentsModel");
 const RecipesModel = require("./models/RecipesModel");
+const UsersModels = require("./models/UsersModels");
 
 // Validates information which is to be passed into a new recipe schema.
 const validateRecipe = (
@@ -113,6 +114,23 @@ function validateUser(user) {
     return valid;
 }
 
+const checkIfInFavorites = async (req, res, next) => {
+    try {
+        const user = await UsersModels.findById(res.locals.id);
+        if (user) {
+            let inFav = false;
+            user.favorites.forEach((recipe) => {
+                if (recipe.recipe.toString() == req.params.recipeId)
+                    inFav = true;
+            });
+            res.locals.inFavorites = inFav;
+        }
+        next();
+    } catch (error) {
+        res.sendStatus(500);
+    }
+};
+
 const forceOwnComment = async (req, res, next) => {
     try {
         const comment = await CommentsModel.findById(req.params.commentId);
@@ -169,4 +187,5 @@ module.exports = {
     hashPassword,
     validateUser,
     getUniqueFileName,
+    checkIfInFavorites,
 };

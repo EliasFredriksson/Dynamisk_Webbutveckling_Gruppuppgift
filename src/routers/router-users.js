@@ -198,4 +198,71 @@ usersRouter.get("/:id", async (req, res) => {
     res.render("users-single", { recipes: recipes, user: user });
 });
 
+usersRouter.post(
+    "/:id/favorites/add/:recipeId",
+    utils.forceAuthorize,
+    utils.checkIfInFavorites,
+    async (req, res) => {
+        if (res.locals.inFavorites)
+            res.status(400).redirect("/recipes/" + req.params.recipeId);
+        else {
+            UsersModels.findByIdAndUpdate(
+                req.params.id,
+                {
+                    $push: {
+                        favorites: {
+                            recipe: new mongoose.Types.ObjectId(
+                                req.params.recipeId
+                            ),
+                        },
+                    },
+                },
+                (error, doc, result) => {
+                    if (error)
+                        res.status(500).redirect(
+                            "/recipes/" + req.params.recipeId
+                        );
+                    else
+                        res.status(200).redirect(
+                            "/recipes/" + req.params.recipeId
+                        );
+                }
+            );
+        }
+    }
+);
+
+usersRouter.post(
+    "/:id/favorites/remove/:recipeId",
+    utils.forceAuthorize,
+    utils.checkIfInFavorites,
+    async (req, res) => {
+        if (!res.locals.inFavorites)
+            res.status(400).redirect("/recipes/" + req.params.recipeId);
+        else {
+            UsersModels.findByIdAndUpdate(
+                req.params.id,
+                {
+                    $pull: {
+                        favorites: {
+                            recipe: new mongoose.Types.ObjectId(
+                                req.params.recipeId
+                            ),
+                        },
+                    },
+                },
+                (error, doc, result) => {
+                    if (error)
+                        res.status(500).redirect(
+                            "/recipes/" + req.params.recipeId
+                        );
+                    else
+                        res.status(200).redirect(
+                            "/recipes/" + req.params.recipeId
+                        );
+                }
+            );
+        }
+    }
+);
 module.exports = usersRouter;
