@@ -13,19 +13,30 @@
             </div>
             {{#each foundRecipes}}
             <div class="recipe">
-                <div class="name-wrapper">
+                <a href="/recipes/{{ _id }}" class="name-wrapper">
                     <img
                         src="/assets/pasta2.jpeg"
                         alt="{{ name }}"
                         class="food-search"
                     />
-                    <p class="p-search">
-                        <a class="name" href="/recipes/{{ _id }}"
-                            >{{ name }}
-                        </a>
-                    </p>
-                </div>
-                <p>
+                    <div>
+                        <span>{{ name }}</span>
+                    </div>
+                </a>
+                <p class="chef-wrapper">
+                    {{#if chef.image}}
+                    <img
+                        class="chef-image"
+                        src="{{ chef.image }}"
+                        alt="{{ chef.username }}"
+                    />
+                    {{else}}
+                    <img
+                        class="chef-image"
+                        src="/assets/yes.png"
+                        alt="{{ chef.username }}"
+                    />
+                    {{/if}}
                     <a class="chef" href="/users/{{ _id }}">
                         {{ chef.username }}</a
                     >
@@ -36,7 +47,7 @@
         {{!-- Second profile container --}}
         <div id="search-container-users">
             <div id="users-inner">
-                <h1 class="title">Användare</h1>
+                <h1 class="title">Kockar</h1>
                 {{#each foundUsers}}
                 <a class="user-wrapper" href="/users/{{ _id }}">
                     <div class="img-wrapper">

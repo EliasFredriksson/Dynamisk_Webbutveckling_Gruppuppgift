@@ -114,7 +114,10 @@
                 <span>Kommentarer</span>
                 {{#each recipe.comments}}
                 <div class="comment">
-                    <div class="comment-user-info">
+                    <a
+                        href="/users/{{ comment.userId }}"
+                        class="comment-user-info"
+                    >
                         <div class="img-wrapper">
                             {{#if comment.profileImage}}
                             <img
@@ -127,10 +130,9 @@
                             />
                             {{/if}}
                         </div>
-                        <a href="/users/{{ comment.userId }}"
-                            ><span>{{ comment.username }}</span></a
-                        >
-                    </div>
+
+                        <span>{{ comment.username }}</span>
+                    </a>
                     <div class="comment-text-wrapper">
                         <form method="post">
                             <textarea class="recipe-comment-text" disabled>{{
