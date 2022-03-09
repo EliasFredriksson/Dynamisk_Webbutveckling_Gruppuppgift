@@ -1,14 +1,9 @@
 <div class="profile-page-body">
   {{>header-home}}
-
-  {{#if (checkIfIdAreSame user._id id)}}
-  <a href="/users/edit" class="edit-button"><button>Edit Your Profile</button></a>
-  {{/if}}
-
-  <h2>{{user.username}}</h2>
-
   <div class="container">
-
+    {{#if (checkIfIdAreSame user._id id)}}
+    <a href="/users/edit" class="edit-button"><button>Edit Your Profile</button></a>
+    {{/if}}
     <div class="profile-upper-container">
       <div class="profile-container">
         <div class="image-container">

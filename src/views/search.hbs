@@ -4,44 +4,62 @@
     <div id="inner-wrapper">
         <div id="search-container-recipes">
             <h1 class="title">Hitta ett recept</h1>
-                {{!-- Small searchfield --}}
-                <div class="form-wrapper">
-            <form action="/search" method="get" class="search-form-mini">
-                 <input type="text" name="search"  placeholder="Sök recept"  />
-                 <input class="search-btn" type="submit" value="Sök"/>
-            </form>
-         </div>
+            {{!-- Small searchfield --}}
+            <div class="form-wrapper">
+                <form action="/search" method="get" class="search-form-mini">
+                    <input type="text" name="search" placeholder="Sök recept" />
+                    <input class="search-btn" type="submit" value="Sök" />
+                </form>
+            </div>
             {{#each foundRecipes}}
             <div class="recipe">
                 <div class="name-wrapper">
-                    <img src="/assets/pasta2.jpeg" alt="{{name}}" class="food-search" >
-                    <p class="p-search"><a class="name" href="/recipes/{{_id}}">{{name}}  </a></p>
-                 </div>
-                <p><a class="chef" href="/users/{{_id}}"> {{chef.username}}</a> </p>
+                    <img
+                        src="/assets/pasta2.jpeg"
+                        alt="{{ name }}"
+                        class="food-search"
+                    />
+                    <p class="p-search">
+                        <a class="name" href="/recipes/{{ _id }}"
+                            >{{ name }}
+                        </a>
+                    </p>
+                </div>
+                <p>
+                    <a class="chef" href="/users/{{ _id }}">
+                        {{ chef.username }}</a
+                    >
+                </p>
             </div>
             {{/each}}
         </div>
         {{!-- Second profile container --}}
         <div id="search-container-users">
-         <div id="recipe-container-name">
-            <h1 class="title">Användare</h1>
-            {{#each foundUsers}}
-              <div class="user-wrapper">
-                <div class="img-wrapper">
-                    {{#if image}}
-                        <img class="avatar-search" src="{{image}}" alt="{{username}}">
-                    {{else}}
-                        <img class="avatar-search" src="/assets/yes.png" alt="{{username}}">
-                    {{/if}}
-                <a class="users-search" href="/users/{{_id}}"><span class="search-span">{{username}}</span></a>
+            <div id="users-inner">
+                <h1 class="title">Användare</h1>
+                {{#each foundUsers}}
+                <a class="user-wrapper" href="/users/{{ _id }}">
+                    <div class="img-wrapper">
+                        {{#if image}}
+                        <img
+                            class="avatar-search"
+                            src="{{ image }}"
+                            alt="{{ username }}"
+                        />
+                        {{else}}
+                        <img
+                            class="avatar-search"
+                            src="/assets/yes.png"
+                            alt="{{ username }}"
+                        />
+                        {{/if}}
 
-                </div>
-              </div>
-            {{/each}}
+                        <span class="search-span">{{ username }}</span>
+                    </div>
+                </a>
+                {{/each}}
             </div>
         </div>
     </div>
     {{>footer-home }}
- </div>
-
-
+</div>
