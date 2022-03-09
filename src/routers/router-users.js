@@ -194,10 +194,30 @@ usersRouter.post("/logout", utils.forceAuthorize, (req, res) => {
 //Get id
 usersRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
-    const user = await UsersModels.findById(req.params.id)
+    let user = await UsersModels.findById(req.params.id)
         .populate("favorites.recipe")
         .lean();
-    const recipes = await RecipesModel.find({ chef: id }).lean();
+
+    // Security. Remove the password.
+    user = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        image: user.image,
+        favorites: user.favorites,
+    };
+    const recipes = await RecipesModel.find({ chef: id })
+        .populate("chef")
+        .lean();
+
+    // Security. Remove the password.
+    recipes.forEach((entry) => {
+        entry.chef = {
+            _id: entry.chef._id,
+            username: entry.chef.username,
+            image: entry.chef.image,
+        };
+    });
 
     res.render("users-single", { recipes: recipes, user: user });
 });

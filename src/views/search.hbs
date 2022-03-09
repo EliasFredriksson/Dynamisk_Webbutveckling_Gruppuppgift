@@ -11,6 +11,9 @@
                     <input class="search-btn" type="submit" value="Sök" />
                 </form>
             </div>
+            {{#if emptyRecipes}}
+            <span class="no-hits">Inga träffar</span>
+            {{else}}
             {{#each foundRecipes}}
             <div class="recipe">
                 <a href="/recipes/{{ _id }}" class="name-wrapper">
@@ -43,33 +46,36 @@
                 </p>
             </div>
             {{/each}}
+            {{/if}}
         </div>
         {{!-- Second profile container --}}
         <div id="search-container-users">
-            <div id="users-inner">
-                <h1 class="title">Kockar</h1>
-                {{#each foundUsers}}
-                <a class="user-wrapper" href="/users/{{ _id }}">
-                    <div class="img-wrapper">
-                        {{#if image}}
-                        <img
-                            class="avatar-search"
-                            src="{{ image }}"
-                            alt="{{ username }}"
-                        />
-                        {{else}}
-                        <img
-                            class="avatar-search"
-                            src="/assets/yes.png"
-                            alt="{{ username }}"
-                        />
-                        {{/if}}
+            <h1 class="title">Kockar</h1>
+            {{#if emptyUsers}}
+            <span class="no-hits">Inga träffar</span>
+            {{else}}
+            {{#each foundUsers}}
+            <a class="user-wrapper" href="/users/{{ _id }}">
+                <div class="img-wrapper">
+                    {{#if image}}
+                    <img
+                        class="avatar-search"
+                        src="{{ image }}"
+                        alt="{{ username }}"
+                    />
+                    {{else}}
+                    <img
+                        class="avatar-search"
+                        src="/assets/yes.png"
+                        alt="{{ username }}"
+                    />
+                    {{/if}}
 
-                        <span class="search-span">{{ username }}</span>
-                    </div>
-                </a>
-                {{/each}}
-            </div>
+                    <span class="search-span">{{ username }}</span>
+                </div>
+            </a>
+            {{/each}}
+            {{/if}}
         </div>
     </div>
     {{>footer-home }}

@@ -258,7 +258,7 @@
                         gap: 10px;
                         color: black;
                         text-decoration: none;
-
+                        transition: 200ms ease;
                         width: fit-content;
                         .img-wrapper {
                             img {
@@ -269,13 +269,9 @@
                                 border-radius: 50%;
                             }
                         }
-                        span {
-                            transition: 200ms ease;
-                        }
+
                         &:hover {
-                            span {
-                                transform: scale(1.2);
-                            }
+                            transform: translateX(5px);
                         }
                     }
 

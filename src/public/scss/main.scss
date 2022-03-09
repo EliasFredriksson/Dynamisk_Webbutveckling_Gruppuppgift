@@ -24,3 +24,19 @@ body {
 #js-data {
     display: none;
 }
+
+#not-found-button {
+    background-color: rgb(233, 214, 197);
+    border: 1px solid rgb(181, 181, 181);
+    color: rgb(76, 76, 76);
+    font-size: 2em;
+    padding: 15px;
+    border-radius: 5px;
+    transition: 200ms ease;
+    &:hover {
+        transform: scale(1.1);
+        background-color: rgb(76, 76, 76);
+        color: white;
+        cursor: pointer;
+    }
+}

@@ -81,6 +81,7 @@
                         border: 1px solid rgba(0, 0, 0, 0.7);
                         border-radius: 5px;
                         padding: 7px;
+                        transition: 200ms ease;
                         .image-container {
                             width: 30%;
                             img {
@@ -111,6 +112,11 @@
                                 justify-content: center;
                                 align-items: center;
                             }
+                        }
+
+                        &:hover {
+                            transform: scale(1.01);
+                            box-shadow: 0 0 6px rgb(125, 125, 125);
                         }
                     }
                 }
