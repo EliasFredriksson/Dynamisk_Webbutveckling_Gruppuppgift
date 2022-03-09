@@ -22,7 +22,7 @@ const recipesRouter = express.Router();
 recipesRouter.get("/create", forceAuthorize, (req, res) => {
     // res.status(200).send("Sent back to create page.");
     res.render("recipes-create", {
-        title: "Create Recipe",
+        title: "Skapa nytt recept",
         ingredientUnits: settings.INGREDIENT_UNITS,
         ingredientCategories: settings.INGREDIENT_CATEGORIES,
         jsFiles: JSON.stringify(["/js/recipes-create.js"]),
@@ -105,7 +105,7 @@ recipesRouter.get("/:id/edit", forceAuthorize, forceOwnRecipe, (req, res) => {
         else {
             if (recipe) {
                 res.status(200).render("recipes-edit", {
-                    title: "Edit Recipe",
+                    title: "Redigera " + recipe.name,
                     recipe: recipe,
                     strigifiedIngredients: JSON.stringify(recipe.ingredients),
                     jsFiles: JSON.stringify(["/js/recipes-create.js"]),

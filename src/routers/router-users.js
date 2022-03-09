@@ -14,7 +14,7 @@ const usersRouter = express.Router();
 //==== ROUTES ====\\
 
 usersRouter.get("/create", (req, res) => {
-    res.render("users-create");
+    res.render("users-create", { title: "Ny användare" });
 });
 
 //Post: / users-create
@@ -219,7 +219,11 @@ usersRouter.get("/:id", async (req, res) => {
         };
     });
 
-    res.render("users-single", { recipes: recipes, user: user });
+    res.render("users-single", {
+        title: user.username,
+        recipes: recipes,
+        user: user,
+    });
 });
 
 usersRouter.post(

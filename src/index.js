@@ -117,6 +117,7 @@ app.get("/search", async (req, res) => {
     if (foundUsers.length > 0) emptyUsers = false;
 
     res.render("search", {
+        title: "Sök",
         foundRecipes: foundRecipes,
         foundUsers: foundUsers,
         emptyRecipes: emptyRecipes,
