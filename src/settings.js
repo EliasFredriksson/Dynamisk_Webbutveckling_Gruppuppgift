@@ -4,8 +4,11 @@ const INGREDIENT_CATEGORIES = [
     "fisk",
     "frukt",
     "bär",
-    "mjölk",
-    "laktos",
+    "grönsak",
+    "mjölkprodukt",
+    "rotfrukt",
+    "basvara",
+    "nötter",
 ];
 
 module.exports = {
