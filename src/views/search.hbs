@@ -1,21 +1,43 @@
 <div id="search-body">
     {{>header-home}}
 
-    <div id="search-container">
-        <div id="search-container-top">
-        <h1 id="search-recipe-h1">Hitta ditt recept</h1>
+    <div id="inner-wrapper">
+        <div id="search-container-recipes">
+            <h1 class="title">Hitta ett recept</h1>
+                {{!-- Small searchfield --}}
+                <div class="form-wrapper">
+            <form action="/search" method="get" class="search-form-mini">
+                 <input type="text" name="search"  placeholder="Sök recept"  />
+                 <input class="search-btn" type="submit" value="Sök"/>
+            </form>
+         </div>
+            {{#each foundRecipes}}
+            <div class="recipe">
+                <div class="name-wrapper">
+                    <img src="/assets/pasta2.jpeg" alt="{{name}}" class="food-search" >
+                    <p class="p-search"><a class="name" href="/recipes/{{_id}}">{{name}}  </a></p>
+                </div>
+                <p><a class="chef" href="/users/{{_id}}"> {{chef.username}}</a> </p>
+            </div>
+            {{/each}}
         </div>
+        {{!-- Second profile container --}}
+        <div id="search-container-users">
+            <div id="recipe-container-name">
+            <h1 class="title">Användare</h1>
+            {{#each foundUsers}}
+            <div class="user-wrapper">
+                <div class="img-wrapper">
+                    <img class="avatar-search" src="/assets/yes.png" alt="{{username}}">
+                <a class="users-search" href="/users/{{_id}}"><span class="search-span">{{username}}</span></a>
 
-
-    {{#each foundRecipes}}
-    <div id="search-recipe-container">
-        <div id="recipe-search-name">
-        <p><a class="serach-Atag" href="/recipes/{{_id}}">{{name}}  </a></p>
-        <p>{{image}}</p>
+                </div>
+            </div>
+            {{/each}}
+            </div>
         </div>
-        <p><a class="serach-Atag" href="/users/{{_id}}"> {{chef.username}}</a> </p>
     </div>
-    {{/each}}
+    {{>footer-home }}
  </div>
 
 

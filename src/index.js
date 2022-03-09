@@ -77,6 +77,8 @@ app.get("/search", async (req, res) => {
   const searchTerm = req.query.search;
   let foundRecipes = [];
   let foundUsers = [];
+  let emptyRecipes = true;
+  let emptyUsers = true;
 
   if (!searchTerm || searchTerm.length <= 0) {
     foundRecipes = recipes;
@@ -87,17 +89,24 @@ app.get("/search", async (req, res) => {
 
       if (recipe.name.toLowerCase().includes(searchTerm.toLowerCase())) {
         foundRecipes.push(recipe);
+        emptyRecipes = false;
       }
     }
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
       if (user.username.toLowerCase().includes(searchTerm.toLowerCase())) {
         foundUsers.push(user);
+        emptyUsers = false;
       }
     }
   }
 
-  res.render("search", { foundRecipes: foundRecipes, foundUsers: foundUsers });
+  res.render("search", {
+    foundRecipes: foundRecipes,
+    foundUsers: foundUsers,
+    emptyRecipes: emptyRecipes,
+    emptyUsers: emptyUsers,
+  });
 });
 
 app.use("/", (req, res) => {
