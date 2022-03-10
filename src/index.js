@@ -1,3 +1,18 @@
+// ########### Grupp 6 ###########
+// Elias Fredriksson
+// Malcolm Lindberg
+// Ludvig Thunberg
+
+// ########### HOW TO RUN ###########
+// Lägg till .env:
+// - MONGOOSE="[your-db-here]"
+// - JWTSECRET="[your-secret-here]"
+// - GOOGLE_CLIENT_ID="[your-client-id-here]"
+// - GOOGLE_CLIENT_SECRET="[your-client-secret-here]"
+// Start both nodemon and scss:
+// - npm run nodemon
+// - npm run scss
+
 require("dotenv").config();
 require("./mongoose.js");
 require("./passport.js");
